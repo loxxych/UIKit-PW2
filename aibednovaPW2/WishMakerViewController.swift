@@ -33,13 +33,11 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let randomButtonTopIndent: CGFloat = 10
         static let hexTextFieldLeftIndent: CGFloat = 20
         static let hexTextFieldTopIndent: CGFloat = 20
-        static let or1TextLeftIndent: CGFloat = 190
         static let or1TextTopIndent: CGFloat = 10
         static let wish1TextLeftIndent: CGFloat = 60
         static let wish1TextTopIndent: CGFloat = 20
         static let slidersButtonLeftIndent: CGFloat = 150
         static let slidersButtonTopIndent: CGFloat = 20
-        static let or2TextLeftIndent: CGFloat = 190
         static let or2TextTopIndent: CGFloat = 10
         static let stackLeftIndent: CGFloat = 20
         static let stackTopIndent: CGFloat = 20
@@ -191,7 +189,6 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(or2TitleView)
         
         or2TitleView.pinCenterX(to: view.centerXAnchor)
-        or2TitleView.pinLeft(to: view, constants.or2TextLeftIndent)
         or2TitleView.pinTop(to: hexColorTextField.bottomAnchor, constants.or2TextTopIndent)
     }
     

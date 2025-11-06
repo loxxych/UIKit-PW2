@@ -7,9 +7,12 @@
 import UIKit
 
 final class WrittenWishCell: UITableViewCell {
-    static let reuseId: String = "WrittenWishCell"
+    static let reuseId: String = Constants.id
+    
     private enum Constants {
+        static let id: String = "WrittenWishCell"
         static let wrapColor: UIColor = .white
+        
         static let wrapRadius: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
@@ -45,5 +48,4 @@ final class WrittenWishCell: UITableViewCell {
         wrap.addSubview(wishLabel)
         wishLabel.pin(to: wrap, Constants.wishLabelOffset)
     }
-    
 }

@@ -23,6 +23,8 @@ final class WishStoringViewController: UIViewController {
     enum Constants {
         static let tableCornerRadius: CGFloat = 20
         static let tableOffset: CGFloat = 20
+        
+        static let tableViewNumberOfSections: Int = 2
     }
     
     
@@ -36,7 +38,7 @@ final class WishStoringViewController: UIViewController {
     private func configureTableView() {
         view.addSubview(table)
         
-        table.backgroundColor = .red
+        table.backgroundColor = .systemTeal
         table.dataSource = self
         table.separatorStyle = .none
         table.layer.cornerRadius = Constants.tableCornerRadius
@@ -64,5 +66,23 @@ extension WishStoringViewController: UITableViewDataSource {
         guard let wishCell = cell as? WrittenWishCell else { return cell }
         wishCell.configure(with: wishArray[indexPath.row])
         return wishCell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return Constants.tableViewNumberOfSections
+    }
+    
+    func numberOfRowsInSection(_ section: Int) -> Int {
+        if (section == 0) {
+            return 1
+        }
+        return wishArray.count
+    }
+    
+    func cellForRowAt(_ indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath.section == 0) {
+            return AddWishCell()
+        }
+        return WrittenWishCell()
     }
 }

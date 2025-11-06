@@ -31,6 +31,8 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let sendColorButtonBottomIndent: CGFloat = 0
         static let randomButtonLeftIndent: CGFloat = 140
         static let randomButtonTopIndent: CGFloat = 10
+        static let addWishButtonBottomIndent: CGFloat = 20
+        static let addWishButtonLeftIndent: CGFloat = 150
         static let hexTextFieldLeftIndent: CGFloat = 20
         static let hexTextFieldTopIndent: CGFloat = 20
         static let or1TextTopIndent: CGFloat = 10
@@ -52,6 +54,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let hideSlidersButtonText = "Hide sliders"
         static let showSlidersButtonText = "Show sliders"
         static let randomButtonText = "Random color"
+        static let addWishButtonText = "Add wish"
         static let hexTextFieldText = "Enter color in hex"
         static let orText = "Or"
         static let red = "Red"
@@ -62,6 +65,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let descriptionTextColor: UIColor = .white
         static let wishTextColor: UIColor = .white
         static let buttonColor: UIColor = .darkGray
+        static let addWishButtonColor: UIColor = .systemBlue
         static let textColor: UIColor = .white
         
         static let redInitValue: Double = 0.5
@@ -97,8 +101,9 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     private let slidersButton = UIButton(type: .system)
     private let sendColorButton = UIButton()
     private let randomButton = UIButton(type: .roundedRect)
+    private let addWishButton = UIButton(type: .roundedRect)
     
-    // Utility varieables
+    // Utility variables
     var slidersHidden: Bool = false
     
     // RGB values
@@ -120,6 +125,8 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         configureDescription()
         
         configureWish1()
+        
+        configureAddWishButton()
     }
     
     private func configureWish1() {
@@ -252,6 +259,21 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         randomButton.addTarget(self, action: #selector(randomButtonPressed), for: .touchUpInside)
     }
     
+    private func configureAddWishButton() {
+        addWishButton.layer.cornerRadius = constants.buttonCornerRadius
+        addWishButton.setTitle(constants.addWishButtonText, for: .normal)
+        addWishButton.backgroundColor = constants.addWishButtonColor
+        addWishButton.setTitleColor(.white, for: .normal)
+        
+        view.addSubview(addWishButton)
+        
+        addWishButton.pinCenterX(to: view.centerXAnchor)
+        addWishButton.pinBottom(to: view.bottomAnchor, constants.addWishButtonBottomIndent)
+        addWishButton.pinLeft(to: view.leadingAnchor, constants.addWishButtonLeftIndent)
+        
+        addWishButton.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
+    }
+    
     // MARK: Sliders
     private func configureSliders() {
         stackView.axis = .vertical
@@ -329,6 +351,10 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         greenValue = Double.random(in: constants.minSliderValue...constants.maxSliderValue)
         
         updateBackground()
+    }
+    
+    @objc func addWishButtonPressed() {
+        
     }
 }
 

@@ -10,13 +10,13 @@ import UIKit
 final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Constants
-    private enum constants {
+    private enum Constants {
         static let titleFontSize: CGFloat = 32
         static let textFontSize: CGFloat = 17
         
-        static let titleFont: UIFont = .monospacedSystemFont(ofSize: constants.titleFontSize, weight: .bold)
-        static let textFont: UIFont = .monospacedSystemFont(ofSize: constants.textFontSize, weight: .regular)
-        static let wishTextFont: UIFont = .monospacedSystemFont(ofSize: constants.textFontSize, weight: .bold)
+        static let titleFont: UIFont = .monospacedSystemFont(ofSize: Constants.titleFontSize, weight: .bold)
+        static let textFont: UIFont = .monospacedSystemFont(ofSize: Constants.textFontSize, weight: .regular)
+        static let wishTextFont: UIFont = .monospacedSystemFont(ofSize: Constants.textFontSize, weight: .bold)
         static let textFieldFont: UIFont = .systemFont(ofSize: 17, weight: .medium)
         
         static let buttonCornerRadius: CGFloat = 10
@@ -90,9 +90,9 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     private let hexColorTextField = UITextField()
     
     // Sliders
-    private let sliderRed = CustomSlider(title: constants.red, min: constants.minSliderValue, max: constants.maxSliderValue)
-    private let sliderBlue = CustomSlider(title: constants.blue, min: constants.minSliderValue, max: constants.maxSliderValue)
-    private let sliderGreen = CustomSlider(title: constants.green, min: constants.minSliderValue, max: constants.maxSliderValue)
+    private let sliderRed = CustomSlider(title: Constants.red, min: Constants.minSliderValue, max: Constants.maxSliderValue)
+    private let sliderBlue = CustomSlider(title: Constants.blue, min: Constants.minSliderValue, max: Constants.maxSliderValue)
+    private let sliderGreen = CustomSlider(title: Constants.green, min: Constants.minSliderValue, max: Constants.maxSliderValue)
     
     // Stacks
     private let stackView = UIStackView()
@@ -107,9 +107,9 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     var slidersHidden: Bool = false
     
     // RGB values
-    private var redValue: Double = constants.redInitValue
-    private var blueValue: Double = constants.blueInitValue
-    private var greenValue: Double = constants.greenInitValue
+    private var redValue: Double = Constants.redInitValue
+    private var blueValue: Double = Constants.blueInitValue
+    private var greenValue: Double = Constants.greenInitValue
     
     //MARK: Lifecycle methods
     override func viewDidLoad() {
@@ -142,72 +142,72 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: TextViews
     private func configureTitle() {
-        titleView.text = constants.titleText
-        titleView.font = constants.titleFont
-        titleView.textColor = constants.titleTextColor
+        titleView.text = Constants.titleText
+        titleView.font = Constants.titleFont
+        titleView.textColor = Constants.titleTextColor
         titleView.textAlignment = .center
         
         view.addSubview(titleView)
         
         titleView.pinCenterX(to: view.centerXAnchor)
-        titleView.pinLeft(to: view, constants.titleLeftIndent)
-        titleView.pinTop(to: view, constants.titleTopIndent)
+        titleView.pinLeft(to: view, Constants.titleLeftIndent)
+        titleView.pinTop(to: view, Constants.titleTopIndent)
     }
     
     private func configureDescription() {
-        descriptionView.text = constants.descriptionText
-        descriptionView.font = constants.textFont
-        descriptionView.textColor = constants.descriptionTextColor
-        descriptionView.numberOfLines = constants.descriptionNumberOfLines
+        descriptionView.text = Constants.descriptionText
+        descriptionView.font = Constants.textFont
+        descriptionView.textColor = Constants.descriptionTextColor
+        descriptionView.numberOfLines = Constants.descriptionNumberOfLines
         
         view.addSubview(descriptionView)
         
         descriptionView.pinCenterX(to: view.centerXAnchor)
-        descriptionView.pinLeft(to: view, constants.descriptionLeftIndent)
-        descriptionView.pinTop(to: titleView.bottomAnchor, constants.descriptionTopIndent)
+        descriptionView.pinLeft(to: view, Constants.descriptionLeftIndent)
+        descriptionView.pinTop(to: titleView.bottomAnchor, Constants.descriptionTopIndent)
     }
     
     private func configureWish1Text() {
-        wish1View.text = constants.wish1Text
-        wish1View.font = constants.wishTextFont
-        wish1View.textColor = constants.textColor
+        wish1View.text = Constants.wish1Text
+        wish1View.font = Constants.wishTextFont
+        wish1View.textColor = Constants.textColor
         
         view.addSubview(wish1View)
 
         wish1View.pinCenterX(to: view.centerXAnchor)
-        wish1View.pinLeft(to: view, constants.wish1TextLeftIndent)
-        wish1View.pinTop(to: descriptionView.bottomAnchor, constants.wish1TextTopIndent)
+        wish1View.pinLeft(to: view, Constants.wish1TextLeftIndent)
+        wish1View.pinTop(to: descriptionView.bottomAnchor, Constants.wish1TextTopIndent)
     }
     
     private func configureOr1Text() {
-        or1TitleView.textColor = constants.textColor
-        or1TitleView.text = constants.orText
+        or1TitleView.textColor = Constants.textColor
+        or1TitleView.text = Constants.orText
         
         view.addSubview(or1TitleView)
         
         or1TitleView.pinCenterX(to: view.centerXAnchor)
-        or1TitleView.pinTop(to: stackView.bottomAnchor, constants.or1TextTopIndent)
+        or1TitleView.pinTop(to: stackView.bottomAnchor, Constants.or1TextTopIndent)
     }
     
     private func configureOr2Text() {
-        or2TitleView.textColor = constants.textColor
-        or2TitleView.text = constants.orText
+        or2TitleView.textColor = Constants.textColor
+        or2TitleView.text = Constants.orText
         
         view.addSubview(or2TitleView)
         
         or2TitleView.pinCenterX(to: view.centerXAnchor)
-        or2TitleView.pinTop(to: hexColorTextField.bottomAnchor, constants.or2TextTopIndent)
+        or2TitleView.pinTop(to: hexColorTextField.bottomAnchor, Constants.or2TextTopIndent)
     }
     
     // MARK: TextFields
     private func configureHexInput() {
         hexColorTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        hexColorTextField.placeholder = constants.hexTextFieldText
+        hexColorTextField.placeholder = Constants.hexTextFieldText
         hexColorTextField.borderStyle = .roundedRect
         hexColorTextField.backgroundColor = .white
         hexColorTextField.textColor = .black
-        hexColorTextField.font = constants.textFieldFont
+        hexColorTextField.font = Constants.textFieldFont
         
         view.addSubview(hexColorTextField)
         
@@ -220,15 +220,15 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Buttons
     func configureSlidersButton() {
-        slidersButton.setTitle(constants.hideSlidersButtonText, for: .normal)
-        slidersButton.backgroundColor = constants.buttonColor
-        slidersButton.layer.cornerRadius = constants.buttonCornerRadius
+        slidersButton.setTitle(Constants.hideSlidersButtonText, for: .normal)
+        slidersButton.backgroundColor = Constants.buttonColor
+        slidersButton.layer.cornerRadius = Constants.buttonCornerRadius
         
         view.addSubview(slidersButton)
 
         slidersButton.pinCenterX(to: view.centerXAnchor)
-        slidersButton.pinLeft(to: view.leadingAnchor, constants.slidersButtonLeftIndent)
-        slidersButton.pinTop(to: wish1View.bottomAnchor, constants.slidersButtonTopIndent)
+        slidersButton.pinLeft(to: view.leadingAnchor, Constants.slidersButtonLeftIndent)
+        slidersButton.pinTop(to: wish1View.bottomAnchor, Constants.slidersButtonTopIndent)
         
         slidersButton.addTarget(self, action: #selector(slidersButtonPressed), for: .touchUpInside)
     }
@@ -238,38 +238,38 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         
         view.addSubview(sendColorButton)
         
-        sendColorButton.pinRight(to: hexColorTextField.trailingAnchor, constants.sendColorButtonRightIndent)
-        sendColorButton.pinTop(to: hexColorTextField.topAnchor, constants.sendColorButtonTopIndent)
-        sendColorButton.pinBottom(to: hexColorTextField.bottomAnchor, constants.sendColorButtonBottomIndent)
+        sendColorButton.pinRight(to: hexColorTextField.trailingAnchor, Constants.sendColorButtonRightIndent)
+        sendColorButton.pinTop(to: hexColorTextField.topAnchor, Constants.sendColorButtonTopIndent)
+        sendColorButton.pinBottom(to: hexColorTextField.bottomAnchor, Constants.sendColorButtonBottomIndent)
         
         sendColorButton.addTarget(self, action: #selector(sendColorButtonPressed), for: .touchUpInside)
     }
     
     private func configureRandomButton() {
-        randomButton.layer.cornerRadius = constants.buttonCornerRadius
-        randomButton.setTitle(constants.randomButtonText, for: .normal)
-        randomButton.backgroundColor = constants.buttonColor
+        randomButton.layer.cornerRadius = Constants.buttonCornerRadius
+        randomButton.setTitle(Constants.randomButtonText, for: .normal)
+        randomButton.backgroundColor = Constants.buttonColor
         
         view.addSubview(randomButton)
         
         randomButton.pinCenterX(to: view.centerXAnchor)
-        randomButton.pinLeft(to: view.leadingAnchor, constants.randomButtonLeftIndent)
-        randomButton.pinTop(to: or2TitleView.bottomAnchor, constants.randomButtonTopIndent)
+        randomButton.pinLeft(to: view.leadingAnchor, Constants.randomButtonLeftIndent)
+        randomButton.pinTop(to: or2TitleView.bottomAnchor, Constants.randomButtonTopIndent)
         
         randomButton.addTarget(self, action: #selector(randomButtonPressed), for: .touchUpInside)
     }
     
     private func configureAddWishButton() {
-        addWishButton.layer.cornerRadius = constants.buttonCornerRadius
-        addWishButton.setTitle(constants.addWishButtonText, for: .normal)
-        addWishButton.backgroundColor = constants.addWishButtonColor
+        addWishButton.layer.cornerRadius = Constants.buttonCornerRadius
+        addWishButton.setTitle(Constants.addWishButtonText, for: .normal)
+        addWishButton.backgroundColor = Constants.addWishButtonColor
         addWishButton.setTitleColor(.white, for: .normal)
         
         view.addSubview(addWishButton)
         
         addWishButton.pinCenterX(to: view.centerXAnchor)
-        addWishButton.pinBottom(to: view.bottomAnchor, constants.addWishButtonBottomIndent)
-        addWishButton.pinLeft(to: view.leadingAnchor, constants.addWishButtonLeftIndent)
+        addWishButton.pinBottom(to: view.bottomAnchor, Constants.addWishButtonBottomIndent)
+        addWishButton.pinLeft(to: view.leadingAnchor, Constants.addWishButtonLeftIndent)
         
         addWishButton.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
     }
@@ -280,7 +280,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         
         view.addSubview(stackView)
         
-        stackView.layer.cornerRadius = constants.stackCornerRadius
+        stackView.layer.cornerRadius = Constants.stackCornerRadius
         stackView.clipsToBounds = true
         
         for slider in [sliderRed, sliderBlue, sliderGreen] {
@@ -288,8 +288,8 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         }
 
         stackView.pinCenterX(to: view.centerXAnchor)
-        stackView.pinLeft(to: view.leadingAnchor, constants.stackLeftIndent)
-        stackView.pinTop(to: slidersButton.bottomAnchor, constants.stackTopIndent)
+        stackView.pinLeft(to: view.leadingAnchor, Constants.stackLeftIndent)
+        stackView.pinTop(to: slidersButton.bottomAnchor, Constants.stackTopIndent)
         
         sliderRed.valueChanged = { [weak self] value in
             self?.redValue = value
@@ -332,12 +332,12 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
             stackView.isHidden = false
             slidersHidden = false
             
-            slidersButton.setTitle(constants.hideSlidersButtonText, for: .normal)
+            slidersButton.setTitle(Constants.hideSlidersButtonText, for: .normal)
         } else {
             stackView.isHidden = true
             slidersHidden = true
             
-            slidersButton.setTitle(constants.showSlidersButtonText, for: .normal)
+            slidersButton.setTitle(Constants.showSlidersButtonText, for: .normal)
         }
     }
     
@@ -346,15 +346,15 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func randomButtonPressed() {
-        redValue = Double.random(in: constants.minSliderValue...constants.maxSliderValue)
-        blueValue = Double.random(in: constants.minSliderValue...constants.maxSliderValue)
-        greenValue = Double.random(in: constants.minSliderValue...constants.maxSliderValue)
+        redValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+        blueValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+        greenValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
         
         updateBackground()
     }
     
     @objc func addWishButtonPressed() {
-        
+        present(WishStoringViewController(), animated: true)
     }
 }
 

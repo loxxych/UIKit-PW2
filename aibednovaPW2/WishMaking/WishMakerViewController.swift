@@ -8,6 +8,7 @@
 import UIKit
 
 final class WishMakerViewController: UIViewController, UITextFieldDelegate {
+    typealias Model = WishMakerModel
     
     // MARK: Constants
     private enum Constants {
@@ -76,6 +77,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Fields
+    private let interactor: WishMakerInteractorProtocol
     
     // Labels
     private let titleView = UILabel()
@@ -107,20 +109,30 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     var slidersHidden: Bool = false
     
     // RGB values
-    private var redValue: Double = Constants.redInitValue
+    /*private var redValue: Double = Constants.redInitValue
     private var blueValue: Double = Constants.blueInitValue
-    private var greenValue: Double = Constants.greenInitValue
+    private var greenValue: Double = Constants.greenInitValue*/
     
-    //MARK: Lifecycle methods
+    //MARK: -Lifecycle methods
+    init(interactor: WishMakerInteractor) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        interactor.loadStart(Model.Start.Request())
     }
     
-    // MARK: UI configuration functions
+    // MARK: -UI configuration functions
     private func configureUI() {
-        updateBackground()
-
+        // updateBackground()
+        
         configureTitle()
         configureDescription()
         
@@ -138,6 +150,14 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         configureSendColorButton()
         configureOr2Text()
         configureRandomButton()
+    }
+    
+    private func configureWish2() {
+        // TODO: finish wish 2 (in later PWs perhaps?) )
+    }
+    
+    private func configureWish3() {
+        // TODO: finish wish 3 (in later PWs perhaps?) )
     }
     
     // MARK: TextViews
@@ -173,7 +193,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         wish1View.textColor = Constants.textColor
         
         view.addSubview(wish1View)
-
+        
         wish1View.pinCenterX(to: view.centerXAnchor)
         wish1View.pinLeft(to: view, Constants.wish1TextLeftIndent)
         wish1View.pinTop(to: descriptionView.bottomAnchor, Constants.wish1TextTopIndent)
@@ -225,7 +245,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         slidersButton.layer.cornerRadius = Constants.buttonCornerRadius
         
         view.addSubview(slidersButton)
-
+        
         slidersButton.pinCenterX(to: view.centerXAnchor)
         slidersButton.pinLeft(to: view.leadingAnchor, Constants.slidersButtonLeftIndent)
         slidersButton.pinTop(to: wish1View.bottomAnchor, Constants.slidersButtonTopIndent)
@@ -286,75 +306,100 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         for slider in [sliderRed, sliderBlue, sliderGreen] {
             stackView.addArrangedSubview(slider)
         }
-
+        
         stackView.pinCenterX(to: view.centerXAnchor)
         stackView.pinLeft(to: view.leadingAnchor, Constants.stackLeftIndent)
         stackView.pinTop(to: slidersButton.bottomAnchor, Constants.stackTopIndent)
         
         sliderRed.valueChanged = { [weak self] value in
-            self?.redValue = value
-            self?.updateBackground()
+            self?.interactor.updateColor(WishMakerModel.ColorUpdate.Request(red: value))
         }
         
         sliderBlue.valueChanged = { [weak self] value in
-            self?.blueValue = value
-            self?.updateBackground()
+            self?.interactor.updateColor(WishMakerModel.ColorUpdate.Request(blue: value))
         }
         
         sliderGreen.valueChanged = { [weak self] value in
-            self?.greenValue = value
-            self?.updateBackground()
+            self?.interactor.updateColor(WishMakerModel.ColorUpdate.Request(green: value))
         }
     }
     
     // MARK: Auxilary functions
     
     // updateBackground function to change bg color for wish 1
-    private func updateBackground(hexcolor: String = "") {
+    /*private func updateBackground(hexcolor: String = "") {
         if (hexcolor == "") {
             view.backgroundColor = .init(red: CGFloat(redValue), green: CGFloat(greenValue), blue: CGFloat(blueValue), alpha: 1)
         } else {
             view.backgroundColor = UIColor(hex: hexcolor)
         }
-    }
-    
-    private func configureWish2() {
-        // TODO: finish wish 2 (in later PWs perhaps?) )
-    }
-    
-    private func configureWish3() {
-        // TODO: finish wish 3 (in later PWs perhaps?) )
-    }
+    }*/
     
     // MARK: Button functions
     @objc func slidersButtonPressed() {
-        if (slidersHidden) {
-            stackView.isHidden = false
-            slidersHidden = false
-            
-            slidersButton.setTitle(Constants.hideSlidersButtonText, for: .normal)
-        } else {
-            stackView.isHidden = true
-            slidersHidden = true
-            
-            slidersButton.setTitle(Constants.showSlidersButtonText, for: .normal)
-        }
+        interactor.toggleSliders(Model.ToggleSliders.Request())
+        
+        /*if (slidersHidden) {
+         stackView.isHidden = false
+         slidersHidden = false
+         
+         slidersButton.setTitle(Constants.hideSlidersButtonText, for: .normal)
+         } else {
+         stackView.isHidden = true
+         slidersHidden = true
+         
+         slidersButton.setTitle(Constants.showSlidersButtonText, for: .normal)
+         }*/
     }
     
     @objc func sendColorButtonPressed() {
-        updateBackground(hexcolor: hexColorTextField.text ?? "")
+        let hex = hexColorTextField.text ?? ""
+        interactor.updateColor(Model.ColorUpdate.Request(hex: hex))
+        
+        // updateBackground(hexcolor: hexColorTextField.text ?? "")
     }
     
     @objc func randomButtonPressed() {
-        redValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
-        blueValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
-        greenValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+        interactor.generateRandomColor(Model.RandomColor.Request())
         
-        updateBackground()
+        /*redValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+         blueValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+         greenValue = Double.random(in: Constants.minSliderValue...Constants.maxSliderValue)
+         
+         updateBackground()*/
     }
     
     @objc func addWishButtonPressed() {
-        present(WishStoringViewController(), animated: true)
+        interactor.showAddWishViewController(Model.ShowAddWishViewController.Request())
+        
+        // present(WishStoringViewController(), animated: true)
+    }
+    
+    // MARK: - Display logic
+    func displayStart(_ viewModel: Model.Start.ViewModel) {
+        
+    }
+    
+    func displayColorUpdate(_ viewModel: Model.ColorUpdate.ViewModel) {
+        view.backgroundColor = UIColor(
+            red: CGFloat(viewModel.red),
+            green: CGFloat(viewModel.green),
+            blue: CGFloat(viewModel.blue),
+            alpha: 1
+        )
+        
+        sliderRed.sliderValue = viewModel.red
+        sliderGreen.sliderValue = viewModel.green
+        sliderBlue.sliderValue = viewModel.blue
+    }
+    
+    func displayToggleSliders(_ viewModel: Model.ToggleSliders.ViewModel) {
+        stackView.isHidden = viewModel.isHidden
+        slidersButton.setTitle(viewModel.buttonTitle, for: .normal)
+    }
+    
+    func displayRandomColor(_ viewModel: Model.RandomColor.ViewModel) {
+        displayColorUpdate(Model.ColorUpdate.ViewModel(red: viewModel.red, green: viewModel.green, blue: viewModel.blue))
     }
 }
 

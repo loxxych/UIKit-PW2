@@ -72,7 +72,11 @@ enum WishMakerModel {
     
     enum ShowAddWishViewController {
         struct Request { }
-        struct Response { }
+        
+        struct Response {
+            let wishStoringViewController: UIViewController
+        }
+        
         struct ViewModel { }
     }
 }

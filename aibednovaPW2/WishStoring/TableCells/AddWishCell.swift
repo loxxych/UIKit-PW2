@@ -7,10 +7,11 @@
 import UIKit
 
 final class AddWishCell: UITableViewCell {
+    // MARK: - Fields
     static let reuseId: String = Constants.id
     
     let textView: UITextView = UITextView()
-    let sendButton: UIButton = UIButton(type: .system)
+    let sendButton: UIButton = UIButton()
     let wrap: UIView = UIView()
     var addWish: ((String) -> ())?
     
@@ -20,15 +21,16 @@ final class AddWishCell: UITableViewCell {
         static let textViewText: String = "Введите желание"
         
         static let wrapColor: UIColor = .white
-        static let textViewColor: UIColor = .systemGray
+        static let textViewColor: UIColor = .lightGray
         
         static let wrapRadius: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
         static let textViewRadius: CGFloat = 8
         static let textViewLeftIndent: CGFloat = 3
-        static let textViewHeight: CGFloat = 40
-        static let sendButtonWidth: CGFloat = 80
+        static let textViewHeight: CGFloat = 30
+        static let sendButtonWidth: CGFloat = 30
+        static let sendButtonCornerRadius: CGFloat = 15
         
         static let elementSpacing: CGFloat = 8
     }
@@ -86,20 +88,23 @@ final class AddWishCell: UITableViewCell {
     }
     
     private func configureSendButton() {
+        sendButton.setImage(UIImage(systemName: "arrow.right.circle.fill"), for: .normal)
+        sendButton.imageView?.contentMode = .scaleAspectFit
+        sendButton.tintColor = .white
+        
         sendButton.pinRight(to: wrap, Constants.elementSpacing)
-        sendButton.setTitle("Добавить", for: .normal)
         sendButton.backgroundColor = .systemBlue
         sendButton.setTitleColor(.white, for: .normal)
-        sendButton.layer.cornerRadius = 8
+        sendButton.layer.cornerRadius = Constants.sendButtonCornerRadius
         sendButton.isUserInteractionEnabled = true
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        
         sendButton.isUserInteractionEnabled = true
         
         sendButton.pinTop(to: wrap, Constants.elementSpacing)
         sendButton.pinRight(to: wrap, Constants.elementSpacing)
         sendButton.pinBottom(to: wrap, Constants.elementSpacing)
         sendButton.setWidth(Constants.sendButtonWidth)
+        
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
     }
     
     @objc
@@ -112,9 +117,7 @@ final class AddWishCell: UITableViewCell {
 
         addWish?(wishText)
 
-        textView.textColor = .placeholderText
+        textView.text = ""
         textView.resignFirstResponder()
     }
-    
-    
 }

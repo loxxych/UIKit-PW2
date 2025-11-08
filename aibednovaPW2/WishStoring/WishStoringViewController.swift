@@ -8,19 +8,9 @@
 import UIKit
 
 final class WishStoringViewController: UIViewController {
-    // MARK: Fields
-    private let table: UITableView = UITableView(frame: .zero, style: .plain)
-    private var wishArray: [String] = ["I wish to add cells to the table", "I wish to kis Jammy"]
-    private let defaults = UserDefaults.standard
+    typealias Model = WishStoringModel
     
-    //MARK: Lifecycle methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        configureUI()
-    }
-    
-    // MARK: Constants
+    // MARK: -Constants
     enum Constants {
         static let tableCornerRadius: CGFloat = 20
         static let tableOffset: CGFloat = 20
@@ -28,6 +18,28 @@ final class WishStoringViewController: UIViewController {
         static let tableViewNumberOfSections: Int = 2
     }
     
+    // MARK: -Fields
+    private let interactor: WishStoringInteractorProtocol
+    
+    private let table: UITableView = UITableView(frame: .zero, style: .plain)
+    private var wishArray: [String] = []
+    
+    // MARK: -Lifecycle methods
+    init(interactor: WishStoringInteractorProtocol) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureUI()
+        interactor.loadStart(WishStoringModel.Start.Request())
+    }
     
     // MARK: UI Configuration
     private func configureUI() {
@@ -51,17 +63,19 @@ final class WishStoringViewController: UIViewController {
         table.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
     }
     
-    private func addWish(_ wish: String) {
-        wishArray.append(wish)
+    // MARK: -Display logic
+    func displayStart(_ viewModel: Model.Start.ViewModel) {
+        wishArray = viewModel.wishes
+        table.reloadData()
+    }
+    
+    func displayNewWish(_ viewModel: Model.Fetch.ViewModel) {
+        wishArray = viewModel.wishes
         
-        let newIndexPath = IndexPath(row: wishArray.count - 1, section: 1)
-        table.insertRows(at: [newIndexPath], with: .automatic)
+        // table.insertRows(at: [viewModel.indexPath], with: .automatic)
+        table.reloadData()
         
-        DispatchQueue.main.async {
-            self.table.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
-        }
-        
-        // defaults.set(stringArray, forKey: Constants.wishesKey)
+        print(wishArray)
     }
 }
 
@@ -84,7 +98,8 @@ extension WishStoringViewController: UITableViewDataSource {
             guard let addWishCell = cell as? AddWishCell else { return cell }
             
             addWishCell.addWish = { [weak self] wishText in
-                self?.addWish(wishText)
+                self?.interactor.addWish(Model.AddWish.Request(wishText: wishText))
+                self?.interactor.loadWishes(Model.Fetch.Request())
             }
             
             return addWishCell
@@ -94,6 +109,7 @@ extension WishStoringViewController: UITableViewDataSource {
             withIdentifier: WrittenWishCell.reuseId,
             for: indexPath
         )
+        
         guard let wishCell = cell as? WrittenWishCell else { return cell }
         wishCell.configure(with: wishArray[indexPath.row])
         return wishCell

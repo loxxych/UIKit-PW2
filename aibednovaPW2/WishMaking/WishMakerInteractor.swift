@@ -8,7 +8,6 @@
 import UIKit
 
 final class WishMakerInteractor : WishMakerInteractorProtocol {
-
     private var presenter: WishMakerPresenterProtocol
     
     private var slidersHidden: Bool = false
@@ -64,7 +63,9 @@ final class WishMakerInteractor : WishMakerInteractorProtocol {
     }
     
     func showAddWishViewController(_ request: Model.ShowAddWishViewController.Request) -> Void {
-        presenter.presentAddWishViewController(Model.ShowAddWishViewController.Response())
+        let wishStoringVC = WishStoringAssembly.build()
+        
+        presenter.presentAddWishViewController(Model.ShowAddWishViewController.Response(wishStoringViewController: wishStoringVC))
     }
     
     func calculateBackgroundColor(red: Double, green: Double, blue: Double) -> UIColor {

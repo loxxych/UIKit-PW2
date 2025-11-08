@@ -37,6 +37,6 @@ final class WishMakerPresenter : WishMakerPresenterProtocol {
     }
     
     func presentAddWishViewController(_ response: Model.ShowAddWishViewController.Response) {
-        view?.present(WishStoringViewController(), animated: true)
+        view?.present(response.wishStoringViewController, animated: true)
     }
 }

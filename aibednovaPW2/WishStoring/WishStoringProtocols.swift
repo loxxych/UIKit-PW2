@@ -10,6 +10,7 @@ protocol WishStoringInteractorProtocol {
     
     func loadStart(_ request: Model.Start.Request)
     func addWish(_ request: Model.AddWish.Request)
+    func deleteWish(_ request: Model.DeleteWish.Request)
     func loadWishes(_ request: Model.Fetch.Request)
 }
 

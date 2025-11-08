@@ -63,7 +63,7 @@ final class WishStoringViewController: UIViewController {
         table.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
     }
     
-    // MARK: -Display logic
+    // MARK: - Display logic
     func displayStart(_ viewModel: Model.Start.ViewModel) {
         wishArray = viewModel.wishes
         table.reloadData()
@@ -71,11 +71,7 @@ final class WishStoringViewController: UIViewController {
     
     func displayNewWish(_ viewModel: Model.Fetch.ViewModel) {
         wishArray = viewModel.wishes
-        
-        // table.insertRows(at: [viewModel.indexPath], with: .automatic)
         table.reloadData()
-        
-        print(wishArray)
     }
 }
 
@@ -111,7 +107,12 @@ extension WishStoringViewController: UITableViewDataSource {
         )
         
         guard let wishCell = cell as? WrittenWishCell else { return cell }
-        wishCell.configure(with: wishArray[indexPath.row])
+        
+        wishCell.configure(wish: wishArray[indexPath.row], deleteWish: { [weak self] in
+            self?.interactor.deleteWish(Model.DeleteWish.Request(indexPath: indexPath))
+            self?.interactor.loadWishes(Model.Fetch.Request())
+        })
+        
         return wishCell
     }
     

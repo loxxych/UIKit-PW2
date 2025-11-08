@@ -22,9 +22,10 @@ enum WishStoringModel {
         struct Request {
             let wishText: String
         }
-        
-        struct Response {
-            let wishes: [String]
+    }
+    
+    enum DeleteWish {
+        struct Request {
             let indexPath: IndexPath
         }
     }

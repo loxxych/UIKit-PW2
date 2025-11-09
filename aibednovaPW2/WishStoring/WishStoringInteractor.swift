@@ -41,6 +41,15 @@ final class WishStoringInteractor : WishStoringInteractorProtocol {
         updateDefaults()
     }
     
+    func editWish(_ request: Model.EditWish.Request) {
+        presenter.presentEditWish(Model.EditWish.Response(indexPath: request.indexPath))
+    }
+    
+    func sendWish(_ request: Model.SendWish.Request) {
+        wishes[request.indexPath.row] = request.newWishText
+        presenter.presentSendWish(Model.SendWish.Response(indexPath: request.indexPath))
+    }
+    
     func loadWishes(_ request: Model.Fetch.Request) {
         let newIndexPath = IndexPath(row: wishes.count - 1, section: 1)
         

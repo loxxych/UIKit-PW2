@@ -65,12 +65,28 @@ final class WishStoringViewController: UIViewController {
     
     // MARK: - Display logic
     func displayStart(_ viewModel: Model.Start.ViewModel) {
-        wishArray = viewModel.wishes
-        table.reloadData()
+        updateData(wishes: viewModel.wishes)
     }
     
     func displayNewWish(_ viewModel: Model.Fetch.ViewModel) {
-        wishArray = viewModel.wishes
+        updateData(wishes: viewModel.wishes)
+    }
+    
+    func displayCellEditMode(_ viewModel: Model.EditWish.ViewModel) {
+        if let cell = table.cellForRow(at: viewModel.indexPath) as? WrittenWishCell {
+                    cell.startEditing()
+                }
+    }
+    
+    func displayEndCellEditMode(_ viewModel: Model.SendWish.ViewModel) {
+        if let cell = table.cellForRow(at: viewModel.indexPath) as? WrittenWishCell {
+                    cell.finishEditing()
+                }
+    }
+    
+    // MARK: - Utility functions
+    func updateData(wishes: [String]) {
+        wishArray = wishes
         table.reloadData()
     }
 }
@@ -108,10 +124,19 @@ extension WishStoringViewController: UITableViewDataSource {
         
         guard let wishCell = cell as? WrittenWishCell else { return cell }
         
-        wishCell.configure(wish: wishArray[indexPath.row], deleteWish: { [weak self] in
+        wishCell.configure(wish: wishArray[indexPath.row],
+                           deleteWish: { [weak self] in
             self?.interactor.deleteWish(Model.DeleteWish.Request(indexPath: indexPath))
             self?.interactor.loadWishes(Model.Fetch.Request())
-        })
+        },
+                           editWish: { [weak self] in
+            self?.interactor.editWish(WishStoringModel.EditWish.Request(indexPath: indexPath))
+        },
+                           sendWish: { [weak self] newWishText in
+            self?.interactor.sendWish(Model.SendWish.Request(indexPath: indexPath, newWishText: newWishText))
+            self?.interactor.loadWishes(Model.Fetch.Request())
+        }
+        )
         
         return wishCell
     }

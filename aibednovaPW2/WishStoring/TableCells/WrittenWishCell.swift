@@ -10,6 +10,9 @@ final class WrittenWishCell: UITableViewCell {
     static let reuseId: String = Constants.id
     
     private enum Constants {
+        // Numbers
+        static let textSize: CGFloat = 17
+        
         // Strings
         static let id: String = "WrittenWishCell"
         static let errorMsg: String = "init(coder:) has not been implemented"
@@ -17,23 +20,34 @@ final class WrittenWishCell: UITableViewCell {
         // Colors
         static let wrapColor: UIColor = .white
         
-        // Constraints
+        // UI constraint properties
         static let wrapRadius: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
         static let wishLabelOffset: CGFloat = 8
-        static let deleteButtonLeftIndent: CGFloat = 8
-        static let deleteButtonWidth: CGFloat = 24
+        static let deleteButtonRightIndent: CGFloat = 8
+        static let buttonSize: CGFloat = 24
+        static let editButtonRightIndent: CGFloat = 8
         
         // Images
         static let config = UIImage.SymbolConfiguration(weight: .light)
         static let trashImage = UIImage(systemName: "trash", withConfiguration: config)
+        static let editImage = UIImage(systemName: "pencil")
+        static let checkmarkImage = UIImage(systemName: "checkmark")
     }
     
     private let wrap: UIView = UIView()
     private let wishLabel: UILabel = UILabel()
     private let deleteButton: UIButton = UIButton()
-    var deleteWish: (() -> ())?
+    private let editButton: UIButton = UIButton()
+    private let wishTextView: UITextView = UITextView()
+    private let sendButton: UIButton = UIButton()
+    
+    private var editingMode: Bool = false
+    
+    private var deleteWish: (() -> ())?
+    private var editWish: (() -> ())?
+    private var sendWish: ((String) -> ())?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,9 +60,11 @@ final class WrittenWishCell: UITableViewCell {
         fatalError(Constants.errorMsg)
     }
     
-    func configure(wish: String, deleteWish: (() -> ())?) {
+    func configure(wish: String, deleteWish: (() -> ())?, editWish: (() -> ())?, sendWish: ((String) -> ())?) {
         wishLabel.text = wish
         self.deleteWish = deleteWish
+        self.editWish = editWish
+        self.sendWish = sendWish
     }
     
     private func configureUI() {
@@ -61,6 +77,11 @@ final class WrittenWishCell: UITableViewCell {
         configureWrap()
         configureLabel()
         configureDeleteButton()
+        configureEditButton()
+        configureTextView()
+        configureSendButton()
+        
+        setEditingMode(false)
     }
     
     private func configureWrap() {
@@ -70,11 +91,12 @@ final class WrittenWishCell: UITableViewCell {
         wrap.layer.cornerRadius = Constants.wrapRadius
         wrap.pinVertical(to: self, Constants.wrapOffsetV)
         wrap.pinHorizontal(to: self, Constants.wrapOffsetH)
-        
-        wrap.addSubview(wishLabel)
     }
     
     private func configureLabel() {
+        wishLabel.font = .systemFont(ofSize: Constants.textSize)
+        wrap.addSubview(wishLabel)
+        
         wishLabel.pin(to: wrap, Constants.wishLabelOffset)
     }
     
@@ -85,16 +107,98 @@ final class WrittenWishCell: UITableViewCell {
         wrap.addSubview(deleteButton)
         
         isUserInteractionEnabled = true
-
+        
         deleteButton.pinCenterY(to: wrap)
-        deleteButton.pinRight(to: wrap, Constants.deleteButtonLeftIndent)
-        deleteButton.setWidth(Constants.deleteButtonWidth)
-        deleteButton.setHeight(Constants.deleteButtonWidth)
+        deleteButton.pinRight(to: wrap, Constants.deleteButtonRightIndent)
+        deleteButton.setWidth(Constants.buttonSize)
+        deleteButton.setHeight(Constants.buttonSize)
         
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
+    private func configureEditButton() {
+        editButton.setImage(Constants.editImage, for: .normal)
+        editButton.tintColor = .gray
+        
+        wrap.addSubview(editButton)
+        
+        isUserInteractionEnabled = true
+        
+        editButton.pinCenterY(to: wrap)
+        editButton.pinRight(to: deleteButton.leadingAnchor, Constants.editButtonRightIndent)
+        editButton.setWidth(Constants.buttonSize)
+        editButton.setHeight(Constants.buttonSize)
+        
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureTextView() {
+        wishTextView.font = .systemFont(ofSize: Constants.textSize)
+        wrap.addSubview(wishTextView)
+        
+        wishTextView.pin(to: wrap, Constants.wishLabelOffset)
+    }
+    
+    private func configureSendButton() {
+        sendButton.setImage(Constants.checkmarkImage, for: .normal)
+        sendButton.tintColor = .green
+        
+        wrap.addSubview(sendButton)
+        
+        isUserInteractionEnabled = true
+        
+        sendButton.pinCenterY(to: wrap)
+        sendButton.pinRight(to: wrap, Constants.deleteButtonRightIndent)
+        sendButton.setWidth(Constants.buttonSize)
+        sendButton.setHeight(Constants.buttonSize)
+        
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Button functions
     @objc private func deleteButtonTapped() {
         deleteWish?()
+    }
+    
+    @objc private func editButtonTapped() {
+        editWish?()
+    }
+    
+    @objc private func sendButtonTapped() {
+        sendWish?(wishTextView.text)
+    }
+    
+    // MARK: - Display logic
+    public func setEditingMode(_ editingMode: Bool) {
+        self.editingMode = editingMode
+        
+        wishLabel.isHidden = editingMode
+        editButton.isHidden = editingMode
+        deleteButton.isHidden = editingMode
+        
+        wishTextView.isHidden = !editingMode
+        sendButton.isHidden = !editingMode
+        
+        if !editingMode {
+            wishTextView.text = ""
+        }
+    }
+    
+    func startEditing() {
+        setEditingMode(true)
+        
+        wishTextView.text = wishLabel.text ?? ""
+        wishTextView.becomeFirstResponder()
+    }
+    
+    func finishEditing() {
+        setEditingMode(false)
+        
+        wishTextView.resignFirstResponder()
+    }
+    
+    // MARK: - Utility funcntions
+    func getEditedText() -> String? {
+        return wishTextView.text
     }
 }

@@ -17,4 +17,12 @@ final class WishStoringPresenter : WishStoringPresenterProtocol {
     func presentLoadWishes(_ response: Model.Fetch.Response) {
         view?.displayNewWish(Model.Fetch.ViewModel(wishes: response.wishes, indexPath: response.indexPath))
     }
+    
+    func presentEditWish(_ response: Model.EditWish.Response) {
+        view?.displayCellEditMode(Model.EditWish.ViewModel(indexPath: response.indexPath))
+    }
+    
+    func presentSendWish(_ response: Model.SendWish.Response) {
+        view?.displayEndCellEditMode(Model.SendWish.ViewModel(indexPath: response.indexPath))
+    }
 }

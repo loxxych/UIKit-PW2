@@ -107,6 +107,7 @@ final class AddWishCell: UITableViewCell {
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Button functions
     @objc
     private func sendButtonTapped() {
         let wishText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)

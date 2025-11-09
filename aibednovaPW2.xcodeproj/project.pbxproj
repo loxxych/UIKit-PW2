@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5961B7AA2EC0C85000A7F742 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5961B7A92EC0C85000A7F742 /* CoreData.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		5961B7A92EC0C85000A7F742 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		596834AE2E801CE8007CB01A /* aibednovaPW2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aibednovaPW2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,16 +41,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5961B7AA2EC0C85000A7F742 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5961B7A82EC0C84F00A7F742 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5961B7A92EC0C85000A7F742 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		596834A52E801CE8007CB01A = {
 			isa = PBXGroup;
 			children = (
 				596834B02E801CE8007CB01A /* aibednovaPW2 */,
+				5961B7A82EC0C84F00A7F742 /* Frameworks */,
 				596834AF2E801CE8007CB01A /* Products */,
 			);
 			sourceTree = "<group>";

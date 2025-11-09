@@ -18,7 +18,6 @@ final class AddWishCell: UITableViewCell {
     // MARK: Constants
     private enum Constants {
         static let id: String = "AddWishCell"
-        static let textViewText: String = "Введите желание"
         
         static let wrapColor: UIColor = .white
         static let textViewColor: UIColor = .lightGray
@@ -31,8 +30,9 @@ final class AddWishCell: UITableViewCell {
         static let textViewHeight: CGFloat = 30
         static let sendButtonWidth: CGFloat = 30
         static let sendButtonCornerRadius: CGFloat = 15
-        
         static let elementSpacing: CGFloat = 8
+        
+        static let sendButtonImage: UIImage? = UIImage(systemName: "plus")
     }
     
     // MARK: - Lifecycle
@@ -46,6 +46,7 @@ final class AddWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Configuration
     private func configureUI() {
         selectionStyle = .none
         backgroundColor = .clear
@@ -75,7 +76,6 @@ final class AddWishCell: UITableViewCell {
         textView.backgroundColor = Constants.textViewColor
         textView.layer.cornerRadius = Constants.textViewRadius
         textView.font = .systemFont(ofSize: 16)
-        textView.accessibilityHint = Constants.textViewText
         
         textView.isEditable = true
         textView.isUserInteractionEnabled = true
@@ -88,7 +88,7 @@ final class AddWishCell: UITableViewCell {
     }
     
     private func configureSendButton() {
-        sendButton.setImage(UIImage(systemName: "arrow.right.circle.fill"), for: .normal)
+        sendButton.setImage(Constants.sendButtonImage, for: .normal)
         sendButton.imageView?.contentMode = .scaleAspectFit
         sendButton.tintColor = .white
         
@@ -112,7 +112,7 @@ final class AddWishCell: UITableViewCell {
     private func sendButtonTapped() {
         let wishText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard !wishText.isEmpty && wishText != Constants.textViewText else {
+        if wishText.isEmpty {
             return
         }
 

@@ -11,10 +11,10 @@ enum WishStoringModel {
     enum Start {
         struct Request { }
         struct Response {
-            let wishes: [String]
+            let wishes: [Wish]
         }
         struct ViewModel {
-            let wishes: [String]
+            let wishes: [Wish]
         }
     }
     
@@ -26,7 +26,7 @@ enum WishStoringModel {
     
     enum DeleteWish {
         struct Request {
-            let indexPath: IndexPath
+            let wish: Wish
         }
     }
     
@@ -47,6 +47,7 @@ enum WishStoringModel {
     enum SendWish {
         struct Request {
             let indexPath: IndexPath
+            let wish: Wish
             let newWishText: String
         }
         
@@ -63,12 +64,12 @@ enum WishStoringModel {
         struct Request { }
         
         struct Response {
-            let wishes: [String]
+            let wishes: [Wish]
             let indexPath: IndexPath
         }
         
         struct ViewModel {
-            let wishes: [String]
+            let wishes: [Wish]
             let indexPath: IndexPath
         }
     }

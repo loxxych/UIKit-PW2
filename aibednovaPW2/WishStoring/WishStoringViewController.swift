@@ -12,6 +12,8 @@ final class WishStoringViewController: UIViewController {
     
     // MARK: -Constants
     enum Constants {
+        static let tableBackgroundColor: UIColor = .systemGray
+        
         static let tableCornerRadius: CGFloat = 20
         static let tableOffset: CGFloat = 20
         
@@ -22,7 +24,7 @@ final class WishStoringViewController: UIViewController {
     private let interactor: WishStoringInteractorProtocol
     
     private let table: UITableView = UITableView(frame: .zero, style: .plain)
-    private var wishArray: [String] = []
+    private var wishArray: [Wish] = []
     
     // MARK: -Lifecycle methods
     init(interactor: WishStoringInteractorProtocol) {
@@ -51,7 +53,7 @@ final class WishStoringViewController: UIViewController {
     private func configureTableView() {
         view.addSubview(table)
         
-        table.backgroundColor = .systemTeal
+        table.backgroundColor = Constants.tableBackgroundColor
         table.dataSource = self
         table.separatorStyle = .none
         table.layer.cornerRadius = Constants.tableCornerRadius
@@ -85,7 +87,7 @@ final class WishStoringViewController: UIViewController {
     }
     
     // MARK: - Utility functions
-    func updateData(wishes: [String]) {
+    func updateData(wishes: [Wish]) {
         wishArray = wishes
         table.reloadData()
     }
@@ -124,16 +126,18 @@ extension WishStoringViewController: UITableViewDataSource {
         
         guard let wishCell = cell as? WrittenWishCell else { return cell }
         
+        let currWish = wishArray[indexPath.row]
+        
         wishCell.configure(wish: wishArray[indexPath.row],
                            deleteWish: { [weak self] in
-            self?.interactor.deleteWish(Model.DeleteWish.Request(indexPath: indexPath))
+            self?.interactor.deleteWish(Model.DeleteWish.Request(wish: currWish))
             self?.interactor.loadWishes(Model.Fetch.Request())
         },
                            editWish: { [weak self] in
             self?.interactor.editWish(WishStoringModel.EditWish.Request(indexPath: indexPath))
         },
                            sendWish: { [weak self] newWishText in
-            self?.interactor.sendWish(Model.SendWish.Request(indexPath: indexPath, newWishText: newWishText))
+            self?.interactor.sendWish(Model.SendWish.Request(indexPath: indexPath, wish: currWish, newWishText: newWishText))
             self?.interactor.loadWishes(Model.Fetch.Request())
         }
         )

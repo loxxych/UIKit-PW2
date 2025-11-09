@@ -60,8 +60,8 @@ final class WrittenWishCell: UITableViewCell {
         fatalError(Constants.errorMsg)
     }
     
-    func configure(wish: String, deleteWish: (() -> ())?, editWish: (() -> ())?, sendWish: ((String) -> ())?) {
-        wishLabel.text = wish
+    func configure(wish: Wish, deleteWish: (() -> ())?, editWish: (() -> ())?, sendWish: ((String) -> ())?) {
+        wishLabel.text = wish.wishText
         self.deleteWish = deleteWish
         self.editWish = editWish
         self.sendWish = sendWish

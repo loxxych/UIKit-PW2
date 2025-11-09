@@ -16,20 +16,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		596834C02E801CEA007CB01A /* Exceptions for "aibednovaPW2" folder in "aibednovaPW2" target */ = {
+		5961B85C2EC0CAD100A7F742 /* Exceptions for "aibednovaPW2" folder in "aibednovaPW2" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				WishDataModel.xcdatamodeld,
 			);
 			target = 596834AD2E801CE8007CB01A /* aibednovaPW2 */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		5961B85D2EC0CAD100A7F742 /* Exceptions for "aibednovaPW2" folder in "Compile Sources" phase from "aibednovaPW2" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 596834AA2E801CE8007CB01A /* Sources */;
+			membershipExceptions = (
+				WishDataModel.xcdatamodeld,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		596834B02E801CE8007CB01A /* aibednovaPW2 */ = {
+		5961B8432EC0CAD100A7F742 /* aibednovaPW2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				596834C02E801CEA007CB01A /* Exceptions for "aibednovaPW2" folder in "aibednovaPW2" target */,
+				5961B85C2EC0CAD100A7F742 /* Exceptions for "aibednovaPW2" folder in "aibednovaPW2" target */,
+				5961B85D2EC0CAD100A7F742 /* Exceptions for "aibednovaPW2" folder in "Compile Sources" phase from "aibednovaPW2" target */,
 			);
 			path = aibednovaPW2;
 			sourceTree = "<group>";
@@ -59,9 +71,9 @@
 		596834A52E801CE8007CB01A = {
 			isa = PBXGroup;
 			children = (
-				596834B02E801CE8007CB01A /* aibednovaPW2 */,
 				5961B7A82EC0C84F00A7F742 /* Frameworks */,
 				596834AF2E801CE8007CB01A /* Products */,
+				5961B8432EC0CAD100A7F742 /* aibednovaPW2 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,7 +101,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				596834B02E801CE8007CB01A /* aibednovaPW2 */,
+				5961B8432EC0CAD100A7F742 /* aibednovaPW2 */,
 			);
 			name = aibednovaPW2;
 			packageProductDependencies = (

@@ -9,18 +9,28 @@ import UIKit
 enum WishMakerModel {
     enum Start {
         struct Request { }
-        struct Response { }
-        struct ViewModel { }
+        
+        struct Response {
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
+        }
+        
+        struct ViewModel {
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
+        }
     }
     
     enum ColorUpdate {
         struct Request {
-            let red: Double?
-            let green: Double?
-            let blue: Double?
+            let red: CGFloat?
+            let green: CGFloat?
+            let blue: CGFloat?
             let hex: String?
             
-            init(red: Double? = nil, green: Double? = nil, blue: Double? = nil, hex: String? = nil) {
+            init(red: CGFloat? = nil, green: CGFloat? = nil, blue: CGFloat? = nil, hex: String? = nil) {
                 self.red = red
                 self.green = green
                 self.blue = blue
@@ -29,15 +39,15 @@ enum WishMakerModel {
         }
         
         struct Response {
-            let red: Double
-            let green: Double
-            let blue: Double
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
         }
         
         struct ViewModel {
-            let red: Double
-            let green: Double
-            let blue: Double
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
         }
     }
     
@@ -58,15 +68,15 @@ enum WishMakerModel {
         struct Request { }
         
         struct Response {
-            let red: Double
-            let green: Double
-            let blue: Double
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
         }
         
         struct ViewModel {
-            let red: Double
-            let green: Double
-            let blue: Double
+            let red: CGFloat
+            let green: CGFloat
+            let blue: CGFloat
         }
     }
     
@@ -76,7 +86,5 @@ enum WishMakerModel {
         struct Response {
             let wishStoringViewController: UIViewController
         }
-        
-        struct ViewModel { }
     }
 }

@@ -5,7 +5,7 @@
 //  Created by loxxy on 08.11.2025.
 //
 
-protocol WishMakerInteractorProtocol {
+protocol WishMakerBusinessLogic {
     typealias Model = WishMakerModel
     func loadStart(_ request: Model.Start.Request)
     func updateColor(_ request: Model.ColorUpdate.Request)
@@ -14,7 +14,7 @@ protocol WishMakerInteractorProtocol {
     func showAddWishViewController(_ request: Model.ShowAddWishViewController.Request)
 }
 
-protocol WishMakerPresenterProtocol {
+protocol WishMakerPresentationLogic {
     typealias Model = WishMakerModel
     func presentStart(_ response: Model.Start.Response)
     func presentColorUpdate(_ response: Model.ColorUpdate.Response)

@@ -5,11 +5,11 @@
 //  Created by loxxy on 08.11.2025.
 //
 
-final class WishStoringPresenter : WishStoringPresenterProtocol {
-    typealias Model = WishStoringModel
-    
+final class WishStoringPresenter : WishStoringPresentationLogic {
+    // MARK: - Fields
     weak var view: WishStoringViewController?
     
+    // MARK: - Presentation logic
     func presentStart(_ response: Model.Start.Response) {
         view?.displayStart(Model.Start.ViewModel(wishes: response.wishes))
     }

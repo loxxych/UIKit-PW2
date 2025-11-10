@@ -5,7 +5,7 @@
 //  Created by loxxy on 08.11.2025.
 //
 
-protocol WishStoringInteractorProtocol {
+protocol WishStoringBusinessLogic {
     typealias Model = WishStoringModel
     
     func loadStart(_ request: Model.Start.Request)
@@ -16,7 +16,7 @@ protocol WishStoringInteractorProtocol {
     func loadWishes(_ request: Model.Fetch.Request)
 }
 
-protocol WishStoringPresenterProtocol {
+protocol WishStoringPresentationLogic {
     typealias Model = WishStoringModel
     
     func presentStart(_ response: Model.Start.Response)

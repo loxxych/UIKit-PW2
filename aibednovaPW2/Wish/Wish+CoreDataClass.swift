@@ -11,5 +11,5 @@ import CoreData
 
 @objc(Wish)
 public class Wish: NSManagedObject {
-
+    
 }

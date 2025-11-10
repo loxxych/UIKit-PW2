@@ -5,11 +5,21 @@
 //  Created by loxxy on 08.11.2025.
 //
 
-final class WishMakerPresenter : WishMakerPresenterProtocol {
+final class WishMakerPresenter : WishMakerPresentationLogic {
+    // MARK: - Constants
+    enum Constants {
+        static let showSliders: String = "Show sliders"
+        static let hideSliders: String = "Hide sliders"
+    }
+    
     weak var view: WishMakerViewController?
 
+    // MARK: Presentation logic
     func presentStart(_ response: Model.Start.Response) {
-        view?.displayStart(Model.Start.ViewModel())
+        let red = response.red
+        let green = response.green
+        let blue = response.blue
+        view?.displayStart(Model.Start.ViewModel(red: red, green: green, blue: blue))
     }
     
     func presentColorUpdate(_ response: Model.ColorUpdate.Response) {
@@ -21,7 +31,7 @@ final class WishMakerPresenter : WishMakerPresenterProtocol {
     }
     
     func presentToggleSliders(_ response: Model.ToggleSliders.Response) {
-        let buttonTitle = response.isHidden ? "Show sliders" : "Hide sliders"
+        let buttonTitle = response.isHidden ? Constants.showSliders : Constants.hideSliders
                 view?.displayToggleSliders(Model.ToggleSliders.ViewModel(
                     isHidden: response.isHidden,
                     buttonTitle: buttonTitle

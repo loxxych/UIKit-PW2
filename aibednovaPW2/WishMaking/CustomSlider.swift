@@ -16,7 +16,7 @@ final class CustomSlider: UIView {
     }
     var titleView = UILabel()
 
-    // MARK: Constructor
+    // MARK: - Constructor
     init(title: String, min: Double, max: Double) {
         super.init(frame: .zero)
         titleView.text = title

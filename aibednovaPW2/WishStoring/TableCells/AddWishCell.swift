@@ -7,21 +7,21 @@
 import UIKit
 
 final class AddWishCell: UITableViewCell {
-    // MARK: - Fields
-    static let reuseId: String = Constants.id
-    
-    let textView: UITextView = UITextView()
-    let sendButton: UIButton = UIButton()
-    let wrap: UIView = UIView()
-    var addWish: ((String) -> ())?
-    
-    // MARK: Constants
+    // MARK: - Constants
     private enum Constants {
+        // Strings
         static let id: String = "AddWishCell"
+        static let defaultTextViewText: String = ""
+        static let errorMsg: String = "init(coder:) has not been implemented"
         
+        // Fonts
+        static let textFont: UIFont = .systemFont(ofSize: 16)
+        
+        // Colors
         static let wrapColor: UIColor = .white
         static let textViewColor: UIColor = .lightGray
         
+        // UI constraint properties
         static let wrapRadius: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
@@ -32,8 +32,17 @@ final class AddWishCell: UITableViewCell {
         static let sendButtonCornerRadius: CGFloat = 15
         static let elementSpacing: CGFloat = 8
         
+        // Images
         static let sendButtonImage: UIImage? = UIImage(systemName: "plus")
     }
+    
+    // MARK: - Fields
+    static let reuseId: String = Constants.id
+    
+    let textView: UITextView = UITextView()
+    let sendButton: UIButton = UIButton()
+    let wrap: UIView = UIView()
+    var addWish: ((String) -> ())?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,7 +52,7 @@ final class AddWishCell: UITableViewCell {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.errorMsg)
     }
     
     // MARK: - UI Configuration
@@ -59,6 +68,7 @@ final class AddWishCell: UITableViewCell {
         configureTextView()
     }
     
+    // MARK: - Wrap configurtion
     private func configureWrap() {
         addSubview(wrap)
         
@@ -72,10 +82,11 @@ final class AddWishCell: UITableViewCell {
         wrap.addSubview(sendButton)
     }
     
+    // MARK: - Wish textView configuration
     private func configureTextView() {
         textView.backgroundColor = Constants.textViewColor
         textView.layer.cornerRadius = Constants.textViewRadius
-        textView.font = .systemFont(ofSize: 16)
+        textView.font = Constants.textFont
         
         textView.isEditable = true
         textView.isUserInteractionEnabled = true
@@ -87,6 +98,7 @@ final class AddWishCell: UITableViewCell {
         textView.setHeight(Constants.textViewHeight)
     }
     
+    // MARK: - Send button configuration
     private func configureSendButton() {
         sendButton.setImage(Constants.sendButtonImage, for: .normal)
         sendButton.imageView?.contentMode = .scaleAspectFit
@@ -107,18 +119,22 @@ final class AddWishCell: UITableViewCell {
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - Button functions
+    // MARK: - Button press functions
     @objc
     private func sendButtonTapped() {
+        // Trim wish text
         let wishText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         
+        // Ignore sending if wish is empty
         if wishText.isEmpty {
             return
         }
 
+        // Add new wish to wish list
         addWish?(wishText)
 
-        textView.text = ""
+        // Clear textView text
+        textView.text = Constants.defaultTextViewText
         textView.resignFirstResponder()
     }
 }

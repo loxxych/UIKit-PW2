@@ -7,8 +7,7 @@
 import UIKit
 
 final class WrittenWishCell: UITableViewCell {
-    static let reuseId: String = Constants.id
-    
+    // MARK: - Constants
     private enum Constants {
         // Numbers
         static let textSize: CGFloat = 17
@@ -16,6 +15,7 @@ final class WrittenWishCell: UITableViewCell {
         // Strings
         static let id: String = "WrittenWishCell"
         static let errorMsg: String = "init(coder:) has not been implemented"
+        static let textViewDefaultText: String = ""
         
         // Colors
         static let wrapColor: UIColor = .white
@@ -35,6 +35,9 @@ final class WrittenWishCell: UITableViewCell {
         static let editImage = UIImage(systemName: "pencil")
         static let checkmarkImage = UIImage(systemName: "checkmark")
     }
+    
+    // MARK: - Fields
+    static let reuseId: String = Constants.id
     
     private let wrap: UIView = UIView()
     private let wishLabel: UILabel = UILabel()
@@ -60,6 +63,7 @@ final class WrittenWishCell: UITableViewCell {
         fatalError(Constants.errorMsg)
     }
     
+    // MARK: - Basic configuration
     func configure(wish: Wish, deleteWish: (() -> ())?, editWish: (() -> ())?, sendWish: ((String) -> ())?) {
         wishLabel.text = wish.wishText
         self.deleteWish = deleteWish
@@ -67,6 +71,7 @@ final class WrittenWishCell: UITableViewCell {
         self.sendWish = sendWish
     }
     
+    // MARK: - UI Configuration
     private func configureUI() {
         selectionStyle = .none
         backgroundColor = .clear
@@ -84,6 +89,7 @@ final class WrittenWishCell: UITableViewCell {
         setEditingMode(false)
     }
     
+    // MARK: - Wrap configuration
     private func configureWrap() {
         addSubview(wrap)
         
@@ -93,6 +99,7 @@ final class WrittenWishCell: UITableViewCell {
         wrap.pinHorizontal(to: self, Constants.wrapOffsetH)
     }
     
+    // MARK: - Label configuration
     private func configureLabel() {
         wishLabel.font = .systemFont(ofSize: Constants.textSize)
         wrap.addSubview(wishLabel)
@@ -100,6 +107,7 @@ final class WrittenWishCell: UITableViewCell {
         wishLabel.pin(to: wrap, Constants.wishLabelOffset)
     }
     
+    // MARK: - Delete button configuration
     private func configureDeleteButton() {
         deleteButton.setImage(Constants.trashImage, for: .normal)
         deleteButton.tintColor = .red
@@ -116,6 +124,7 @@ final class WrittenWishCell: UITableViewCell {
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Edit button configuration
     private func configureEditButton() {
         editButton.setImage(Constants.editImage, for: .normal)
         editButton.tintColor = .gray
@@ -132,13 +141,7 @@ final class WrittenWishCell: UITableViewCell {
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
     }
     
-    private func configureTextView() {
-        wishTextView.font = .systemFont(ofSize: Constants.textSize)
-        wrap.addSubview(wishTextView)
-        
-        wishTextView.pin(to: wrap, Constants.wishLabelOffset)
-    }
-    
+    // MARK: - Send button configuration
     private func configureSendButton() {
         sendButton.setImage(Constants.checkmarkImage, for: .normal)
         sendButton.tintColor = .green
@@ -155,7 +158,15 @@ final class WrittenWishCell: UITableViewCell {
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - Button functions
+    // MARK: - Wish text configuration
+    private func configureTextView() {
+        wishTextView.font = .systemFont(ofSize: Constants.textSize)
+        wrap.addSubview(wishTextView)
+        
+        wishTextView.pin(to: wrap, Constants.wishLabelOffset)
+    }
+    
+    // MARK: - Button press functions
     @objc private func deleteButtonTapped() {
         deleteWish?()
     }
@@ -180,14 +191,14 @@ final class WrittenWishCell: UITableViewCell {
         sendButton.isHidden = !editingMode
         
         if !editingMode {
-            wishTextView.text = ""
+            wishTextView.text = Constants.textViewDefaultText
         }
     }
     
     func startEditing() {
         setEditingMode(true)
         
-        wishTextView.text = wishLabel.text ?? ""
+        wishTextView.text = wishLabel.text ?? Constants.textViewDefaultText
         wishTextView.becomeFirstResponder()
     }
     

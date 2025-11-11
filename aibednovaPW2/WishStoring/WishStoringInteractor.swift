@@ -65,8 +65,9 @@ final class WishStoringInteractor : WishStoringBusinessLogic {
     
     // Updates wishes to current ones
     func loadWishes(_ request: Model.Fetch.Request) {
-        let newIndexPath = IndexPath(row: wishes.count - 1, section: 1)
         getAllWishes() // Get wishes from core data
+
+        let newIndexPath = IndexPath(row: wishes.count - 1, section: 1)
         
         presenter.presentLoadWishes(Model.Fetch.Response(wishes: wishes, indexPath: newIndexPath))
     }

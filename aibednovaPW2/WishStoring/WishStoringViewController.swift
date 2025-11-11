@@ -183,6 +183,8 @@ extension WishStoringViewController: UITableViewDataSource {
         }
         )
         
+        wishCell.animateAppearance()
+        
         return wishCell
     }
     

@@ -34,6 +34,12 @@ final class WrittenWishCell: UITableViewCell {
         static let trashImage = UIImage(systemName: "trash", withConfiguration: config)
         static let editImage = UIImage(systemName: "pencil")
         static let checkmarkImage = UIImage(systemName: "checkmark")
+        
+        // Animation properties
+        static let animationDuration: CGFloat = 0.8
+        static let animationDelay: CGFloat = 0
+        static let animationDamping: CGFloat = 0.7
+        static let AnimationVelocity: CGFloat = 0.3
     }
     
     // MARK: - Fields
@@ -212,6 +218,22 @@ final class WrittenWishCell: UITableViewCell {
         setEditingMode(false)
         
         wishTextView.resignFirstResponder()
+    }
+    
+    func animateAppearance() {
+        // Start slightly below and faded
+        self.transform = CGAffineTransform(translationX: 0, y: 40)
+        
+        // Animate with spring effect
+        UIView.animate(
+            withDuration: Constants.animationDuration,
+            delay: Constants.animationDelay,
+            usingSpringWithDamping: Constants.animationDamping,
+            initialSpringVelocity: Constants.AnimationVelocity,
+            options: [.curveEaseOut]
+        ) {
+            self.transform = .identity
+        }
     }
     
     // MARK: - Utility funcntions

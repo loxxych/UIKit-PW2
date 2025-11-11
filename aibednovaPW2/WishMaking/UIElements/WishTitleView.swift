@@ -25,6 +25,7 @@ final class WishTitleView : UIView {
         static let descriptionNumberOfLines = 4
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: Constants.titleFontSize, weight: .bold)
         static let textFont: UIFont = .monospacedSystemFont(ofSize: Constants.textFontSize, weight: .regular)
+        static let textAlignment: NSTextAlignment = .center
         
         // Colors
         static let titleTextColor: UIColor = .white
@@ -67,6 +68,7 @@ final class WishTitleView : UIView {
         descriptionView.font = Constants.textFont
         descriptionView.textColor = Constants.descriptionTextColor
         descriptionView.numberOfLines = Constants.descriptionNumberOfLines
+        descriptionView.textAlignment = Constants.textAlignment
     }
     
     private func configureStackView() {

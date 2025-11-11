@@ -19,6 +19,7 @@ final class CustomSlider: UIView {
     // MARK: - Constructor
     init(title: String, min: Double, max: Double) {
         super.init(frame: .zero)
+        
         titleView.text = title
         titleView.textAlignment = .center
         slider.minimumValue = Float(min)

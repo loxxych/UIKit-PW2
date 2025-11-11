@@ -25,12 +25,12 @@ enum WishMakerModel {
     
     enum ColorUpdate {
         struct Request {
-            let red: CGFloat?
-            let green: CGFloat?
-            let blue: CGFloat?
+            let red: Double?
+            let green: Double?
+            let blue: Double?
             let hex: String?
             
-            init(red: CGFloat? = nil, green: CGFloat? = nil, blue: CGFloat? = nil, hex: String? = nil) {
+            init(red: Double? = nil, green: Double? = nil, blue: Double? = nil, hex: String? = nil) {
                 self.red = red
                 self.green = green
                 self.blue = blue

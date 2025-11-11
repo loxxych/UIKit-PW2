@@ -13,6 +13,8 @@ final class CustomSlidersView : UIView {
         // Numbers
         static let minSliderValue: Double = 0
         static let maxSliderValue: Double = 1
+        
+        // UI constraint properties
         static let stackCornerRadius: CGFloat = 20
         static let buttonCornerRadius: CGFloat = 5
         
@@ -20,7 +22,7 @@ final class CustomSlidersView : UIView {
         static let elementSpacing: CGFloat = 8
         static let buttonWidth: CGFloat = 150
         static let buttonHeight: CGFloat = 30
-        static let stackWidth: CGFloat = 380
+        static let stackWidth: CGFloat = 450
         
         // Strings
         static let red = "Red"
@@ -29,10 +31,10 @@ final class CustomSlidersView : UIView {
         static let hideSlidersButtonText = "Hide sliders"
         static let showSlidersButtonText = "Show sliders"
         static let errorMsg: String = "init(coder:) has not been implemented"
-
+        
         // Colors
         static let buttonColor: UIColor = .darkGray
-        static let textColor: UIColor = .white
+        static let backgroundColor: UIColor = .white
     }
     
     // MARK: - Fields
@@ -45,6 +47,7 @@ final class CustomSlidersView : UIView {
     var redValueChanged: ((Double) -> Void)?
     var greenValueChanged: ((Double) -> Void)?
     var blueValueChanged: ((Double) -> Void)?
+    var onColorChanged: ((_ red: Double?, _ green: Double?, _ blue: Double?) -> ())?
     
     // MARK: - Lifecycle
     init() {
@@ -59,43 +62,44 @@ final class CustomSlidersView : UIView {
     
     // MARK: - UI Configuration
     private func configureUI() {
-        // Configuring stackView
+        configureStackView()
+    }
+    
+    private func configureStackView() {
         let stack = UIStackView(arrangedSubviews: [sliderRed, sliderGreen, sliderBlue])
         
         stack.axis = .vertical
         stack.layer.cornerRadius = Constants.stackCornerRadius
         stack.clipsToBounds = true
         stack.spacing = Constants.elementSpacing
-        
+        stack.backgroundColor = Constants.backgroundColor
         addSubview(stack)
         
+        // Stack constraints
         stack.pinTop(to: self)
         stack.setWidth(Constants.stackWidth)
         stack.pinHorizontal(to: self, 20)
         stack.pinBottom(to: self)
-        
-        sliderRed.setWidth(Constants.stackWidth)
-        
-        bindSliders()
     }
     
+    // Assigns slider closures
     func bindSliders() {
         sliderRed.valueChanged = redValueChanged
         sliderGreen.valueChanged = greenValueChanged
         sliderBlue.valueChanged = blueValueChanged
     }
-
+    
     // MARK: - Display logic
     func setSliders(red: Double, green: Double, blue: Double) {
         sliderRed.sliderValue = red
         sliderGreen.sliderValue = green
         sliderBlue.sliderValue = blue
     }
-
+    
     func setHidden(_ hidden: Bool) {
         sliderRed.isHidden = hidden
         sliderGreen.isHidden = hidden
         sliderBlue.isHidden = hidden
     }
-
+    
 }

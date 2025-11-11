@@ -36,7 +36,10 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Fields
     private let interactor: WishStoringBusinessLogic
     
+    // Table views
     private let table: UITableView = UITableView(frame: .zero, style: .plain)
+    
+    // Labels
     let titleView: UILabel = UILabel()
     private var wishArray: [Wish] = []
     
@@ -57,7 +60,7 @@ final class WishStoringViewController: UIViewController {
         interactor.loadStart(WishStoringModel.Start.Request())
     }
     
-    // MARK: UI Configuration
+    // MARK: - UI Configuration
     private func configureUI() {
         view.backgroundColor = .systemBackground
         
@@ -79,7 +82,7 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Table configuration
     private func configureTableView() {
         view.addSubview(table)
-
+        
         table.backgroundColor = Constants.tableBackgroundColor
         table.dataSource = self
         table.separatorStyle = .none
@@ -106,14 +109,14 @@ final class WishStoringViewController: UIViewController {
     
     func displayCellEditMode(_ viewModel: Model.EditWish.ViewModel) {
         if let cell = table.cellForRow(at: viewModel.indexPath) as? WrittenWishCell {
-                    cell.startEditing()
-                }
+            cell.startEditing()
+        }
     }
     
     func displayEndCellEditMode(_ viewModel: Model.SendWish.ViewModel) {
         if let cell = table.cellForRow(at: viewModel.indexPath) as? WrittenWishCell {
-                    cell.finishEditing()
-                }
+            cell.finishEditing()
+        }
     }
     
     // MARK: - Utility functions

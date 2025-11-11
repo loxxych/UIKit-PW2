@@ -22,6 +22,7 @@ final class WishStoringInteractor : WishStoringBusinessLogic {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let defaults: UserDefaults = UserDefaults.standard
     
+    // Wishes
     private var wishes: [Wish] = []
     
     // MARK: - Lifecycle methods
@@ -30,7 +31,6 @@ final class WishStoringInteractor : WishStoringBusinessLogic {
     }
     
     // MARK: - Business Logic
-    
     // Is called upon opening the WishStoringView
     func loadStart(_ request: Model.Start.Request) {
         getAllWishes() // Get wishes from core data
@@ -72,7 +72,6 @@ final class WishStoringInteractor : WishStoringBusinessLogic {
     }
     
     // MARK: - Utility core data functions
-    
     // Updates local wish array with wishes from core data
     private func getAllWishes() {
         do {

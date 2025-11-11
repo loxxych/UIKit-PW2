@@ -37,17 +37,27 @@ final class WrittenWishCell: UITableViewCell {
     }
     
     // MARK: - Fields
+    // Ids
     static let reuseId: String = Constants.id
     
+    // Views
     private let wrap: UIView = UIView()
+    
+    // Labels
     private let wishLabel: UILabel = UILabel()
+    
+    // Buttons
     private let deleteButton: UIButton = UIButton()
     private let editButton: UIButton = UIButton()
-    private let wishTextView: UITextView = UITextView()
     private let sendButton: UIButton = UIButton()
     
+    // Text views
+    private let wishTextView: UITextView = UITextView()
+    
+    // Utility variables
     private var editingMode: Bool = false
     
+    // Closures
     private var deleteWish: (() -> ())?
     private var editWish: (() -> ())?
     private var sendWish: ((String) -> ())?
@@ -131,8 +141,6 @@ final class WrittenWishCell: UITableViewCell {
         
         wrap.addSubview(editButton)
         
-        isUserInteractionEnabled = true
-        
         editButton.pinCenterY(to: wrap)
         editButton.pinRight(to: deleteButton.leadingAnchor, Constants.editButtonRightIndent)
         editButton.setWidth(Constants.buttonSize)
@@ -147,8 +155,6 @@ final class WrittenWishCell: UITableViewCell {
         sendButton.tintColor = .green
         
         wrap.addSubview(sendButton)
-        
-        isUserInteractionEnabled = true
         
         sendButton.pinCenterY(to: wrap)
         sendButton.pinRight(to: wrap, Constants.deleteButtonRightIndent)

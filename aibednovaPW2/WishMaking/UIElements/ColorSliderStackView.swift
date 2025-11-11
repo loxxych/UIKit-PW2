@@ -14,13 +14,15 @@ final class ColorSliderStackView : UIView {
         static let minSliderValue: Double = 0
         static let maxSliderValue: Double = 1
         static let stackCornerRadius: CGFloat = 20
-        static let buttonCornerRadius: CGFloat = 5
+        static let buttonCornerRadius: CGFloat = 10
+        static let alignment: UIStackView.Alignment = .center
         
         // UI Constraint properties
         static let elementSpacing: CGFloat = 8
         static let buttonWidth: CGFloat = 150
         static let buttonHeight: CGFloat = 30
         static let stackWidth: CGFloat = 380
+        static let horizontalIndent: CGFloat = 20
         
         // Strings
         static let red = "Red"
@@ -37,9 +39,7 @@ final class ColorSliderStackView : UIView {
     
     // MARK: - Fields
     // Sliders
-    private let sliderRed = CustomSlider(title: Constants.red, min: Constants.minSliderValue, max: Constants.maxSliderValue)
-    private let sliderBlue = CustomSlider(title: Constants.blue, min: Constants.minSliderValue, max: Constants.maxSliderValue)
-    private let sliderGreen = CustomSlider(title: Constants.green, min: Constants.minSliderValue, max: Constants.maxSliderValue)
+    private let sliders: CustomSlidersView = CustomSlidersView()
     
     // Buttons
     private let slidersButton = UIButton(type: .system)
@@ -63,14 +63,26 @@ final class ColorSliderStackView : UIView {
     
     // MARK: - UI Configuration
     private func configureUI() {
-        // Configuring slider button
+        configureSlidersButton()
+        configureStackView()
+        
+        connectActions()
+    }
+    
+    func configureSlidersButton() {
         slidersButton.setTitle(Constants.hideSlidersButtonText, for: .normal)
+        slidersButton.titleLabel?.textColor = Constants.textColor
         slidersButton.backgroundColor = Constants.buttonColor
         slidersButton.layer.cornerRadius = Constants.buttonCornerRadius
         slidersButton.addTarget(self, action: #selector(slidersButtonPressed), for: .touchUpInside)
         
-        // Configuring stackView
-        let stack = UIStackView(arrangedSubviews: [slidersButton, sliderRed, sliderGreen, sliderBlue])
+        slidersButton.setHeight(Constants.buttonHeight)
+        slidersButton.setWidth(Constants.buttonWidth)
+        slidersButton.layer.cornerRadius = Constants.buttonCornerRadius
+    }
+    
+    func configureStackView() {
+        let stack = UIStackView(arrangedSubviews: [slidersButton, sliders])
         
         stack.axis = .vertical
         stack.clipsToBounds = true
@@ -78,23 +90,21 @@ final class ColorSliderStackView : UIView {
         
         addSubview(stack)
         
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        // Stack constraints
         stack.pinTop(to: self)
         stack.setWidth(Constants.stackWidth)
-        stack.pinHorizontal(to: self, 20)
+        stack.pinHorizontal(to: self, Constants.horizontalIndent)
         stack.pinBottom(to: self)
-        
-        sliderRed.setWidth(Constants.stackWidth)
-        slidersButton.setHeight(Constants.buttonHeight)
-        slidersButton.setWidth(Constants.buttonWidth)
-        
-        bindSliders()
+        stack.alignment = Constants.alignment
     }
     
-    func bindSliders() {
-        sliderRed.valueChanged = redValueChanged
-        sliderGreen.valueChanged = greenValueChanged
-        sliderBlue.valueChanged = blueValueChanged
+    // MARK: - Action connection
+    func connectActions() {
+        sliders.redValueChanged = redValueChanged
+        sliders.greenValueChanged = greenValueChanged
+        sliders.blueValueChanged = blueValueChanged
+        
+        sliders.bindSliders()
     }
     
     // MARK: - Button press functions
@@ -104,15 +114,11 @@ final class ColorSliderStackView : UIView {
     
     // MARK: - Display logic
     func setSliders(red: Double, green: Double, blue: Double) {
-        sliderRed.sliderValue = red
-        sliderGreen.sliderValue = green
-        sliderBlue.sliderValue = blue
+        sliders.setSliders(red: red, green: green, blue: blue)
     }
-
+    
     func setHidden(_ hidden: Bool) {
-        sliderRed.isHidden = hidden
-        sliderGreen.isHidden = hidden
-        sliderBlue.isHidden = hidden
+        sliders.setHidden(hidden)
     }
-
+    
 }

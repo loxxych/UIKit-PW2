@@ -83,10 +83,10 @@ final class WishMakerInteractor : WishMakerBusinessLogic {
         greenValue = CGFloat.random(in: Constants.minSliderValue...Constants.maxSliderValue)
         
         presenter.presentRandomColor(Model.RandomColor.Response(
-                    red: redValue,
-                    green: blueValue,
-                    blue: greenValue
-                ))
+            red: redValue,
+            green: blueValue,
+            blue: greenValue
+        ))
     }
     
 }

@@ -12,6 +12,8 @@ final class HexTextField : UIView, UITextFieldDelegate {
     enum Constants {
         // Constraint properties
         static let elementSpacing: CGFloat = 10
+        static let stackAxis: NSLayoutConstraint.Axis = .horizontal
+        static let buttonSize: CGFloat = 20
         
         // String
         static let hexTextFieldText = "Enter color in hex"
@@ -19,7 +21,7 @@ final class HexTextField : UIView, UITextFieldDelegate {
         static let defaultText: String = ""
         
         // Fonts
-        static let textFieldFont: UIFont = .systemFont(ofSize: Constants.textFontSize, weight: .medium)
+        static let textFieldFont: UIFont = .systemFont(ofSize: Constants.textFontSize)
         static let textFontSize: CGFloat = 17
         static let textFieldBorderStyle: UITextField.BorderStyle = .roundedRect
         
@@ -33,7 +35,10 @@ final class HexTextField : UIView, UITextFieldDelegate {
     }
     
     // MARK: - Fields
+    // Text fields
     private let hexTextField = UITextField()
+    
+    // Buttons
     private let sendColorButton = UIButton()
     
     // Closures
@@ -43,26 +48,39 @@ final class HexTextField : UIView, UITextFieldDelegate {
     init() {
         super.init(frame: .zero)
         
-        // Configuring text field
+        configureUI()
+    }
+    
+    // MARK: - UI Configuration
+    private func configureUI() {
+        configureTextField()
+        configureHexSendButton()
+        configureStackView()
+    }
+    
+    private func configureTextField() {
         hexTextField.placeholder = Constants.hexTextFieldText
         hexTextField.borderStyle = Constants.textFieldBorderStyle
         hexTextField.backgroundColor = Constants.textFieldColor
         hexTextField.textColor = Constants.textFieldTextColor
         hexTextField.font = Constants.textFieldFont
         hexTextField.delegate = self
-        
-        // Configuring hex send button
+    }
+    
+    private func configureHexSendButton() {
         sendColorButton.setImage(Constants.sendButtonImage, for: .normal)
-        sendColorButton.addTarget(self, action: #selector(sendColorButtonPressed), for: .touchUpInside)
         
+        sendColorButton.addTarget(self, action: #selector(sendColorButtonPressed), for: .touchUpInside)
+    }
+    
+    private func configureStackView() {
         let stack = UIStackView(arrangedSubviews: [hexTextField, sendColorButton])
-        stack.axis = .horizontal
+        stack.axis = Constants.stackAxis
         stack.spacing = Constants.elementSpacing
         
         addSubview(stack)
         
         isUserInteractionEnabled = true
-        hexTextField.isUserInteractionEnabled = true
         
         stack.pin(to: self)
     }

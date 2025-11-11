@@ -37,8 +37,10 @@ final class AddWishCell: UITableViewCell {
     }
     
     // MARK: - Fields
+    // Ids
     static let reuseId: String = Constants.id
     
+    // Closures
     let textView: UITextView = UITextView()
     let sendButton: UIButton = UIButton()
     let wrap: UIView = UIView()
@@ -129,10 +131,10 @@ final class AddWishCell: UITableViewCell {
         if wishText.isEmpty {
             return
         }
-
+        
         // Add new wish to wish list
         addWish?(wishText)
-
+        
         // Clear textView text
         textView.text = Constants.defaultTextViewText
         textView.resignFirstResponder()

@@ -4,6 +4,7 @@
 //
 //  Created by loxxy on 08.11.2025.
 //
+
 import UIKit
 
 enum WishMakerAssembly {
@@ -13,9 +14,9 @@ enum WishMakerAssembly {
         let viewController: WishMakerViewController = WishMakerViewController(
             interactor: interactor
         )
-
+        
         presenter.view = viewController
-
+        
         return viewController
     }
 }

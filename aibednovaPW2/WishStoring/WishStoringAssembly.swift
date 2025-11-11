@@ -14,9 +14,9 @@ enum WishStoringAssembly {
         let viewController: WishStoringViewController = WishStoringViewController(
             interactor: interactor
         )
-
+        
         presenter.view = viewController
-
+        
         return viewController
     }
 }

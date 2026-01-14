@@ -23,15 +23,22 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let addWishButtonLeftIndent: CGFloat = 150
         static let elementSpacing: CGFloat = 10
         static let wish1ViewHorizontalIndent: CGFloat = 20
+        static let spacing: CGFloat = 10
+        static let actionStackViewBottomIndent: CGFloat = 20
+        static let actionStackViewLeftIndent: CGFloat = 40
+        static let scheduleButtonLeftIndent: CGFloat = 50
+        static let stackWidth: CGFloat = 200
         
         // Strings
-        static let titleText = "WishMaker"
-        static let descriptionText = "Let's just get this over with. Three wishes. One chance to make a difference. Choose wisely."
-        static let addWishButtonText = "My wishes"
+        static let titleText: String = "WishMaker"
+        static let descriptionText: String = "Let's just get this over with. Three wishes. One chance to make a difference. Choose wisely."
+        static let addWishButtonText: String = "My wishes"
         static let errorMsg: String = "init(coder:) has not been implemented"
+        static let scheduleButtonText: String = "Schedule wish granting"
         
         // Colors
         static let addWishButtonColor: UIColor = .systemBlue
+        static let scheduleButtonColor: UIColor = .systemBlue
         static let textColor: UIColor = .white
         static let alpha: CGFloat = 1
     }
@@ -47,7 +54,11 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     }()
     
     // Buttons
-    private let addWishButton = UIButton(type: .roundedRect)
+    private let addWishButton: UIButton = UIButton(type: .roundedRect)
+    private let scheduleButton: UIButton = UIButton(type: .roundedRect)
+    
+    // Stacks
+    private let actionStackView: UIStackView = UIStackView()
     
     //MARK: - Lifecycle methods
     init(interactor: WishMakerBusinessLogic) {
@@ -69,7 +80,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     private func configureUI() {
         configureTitle()
         configureWish1()
-        configureAddWishButton()
+        configureActionStackView()
     }
     
     // MARK: - Title configuration
@@ -119,15 +130,36 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         addWishButton.layer.cornerRadius = Constants.buttonCornerRadius
         addWishButton.setTitle(Constants.addWishButtonText, for: .normal)
         addWishButton.backgroundColor = Constants.addWishButtonColor
-        addWishButton.setTitleColor(.white, for: .normal)
-        
-        view.addSubview(addWishButton)
-        
-        addWishButton.pinCenterX(to: view.centerXAnchor)
-        addWishButton.pinBottom(to: view.bottomAnchor, Constants.addWishButtonBottomIndent)
-        addWishButton.pinLeft(to: view.leadingAnchor, Constants.addWishButtonLeftIndent)
+        addWishButton.setTitleColor(Constants.textColor, for: .normal)
         
         addWishButton.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
+    }
+    
+    // MARK: - Schedule wish granting button configuration
+    private func configureScheduleButton() {
+        scheduleButton.layer.cornerRadius = Constants.buttonCornerRadius
+        scheduleButton.setTitle(Constants.scheduleButtonText, for: .normal)
+        scheduleButton.backgroundColor = Constants.scheduleButtonColor
+        scheduleButton.setTitleColor(Constants.textColor, for: .normal)
+    }
+    
+    // MARK: - Action stack view configuration
+    private func configureActionStackView() {
+        actionStackView.axis = .vertical
+        actionStackView.spacing = Constants.spacing
+        
+        view.addSubview(actionStackView)
+        
+        for button in [addWishButton, scheduleButton] {
+            actionStackView.addArrangedSubview(button)
+        }
+        
+        configureAddWishButton()
+        configureScheduleButton()
+        
+        actionStackView.pinBottom(to: view.bottomAnchor, Constants.actionStackViewBottomIndent)
+        actionStackView.pinCenterX(to: view.centerXAnchor)
+        actionStackView.setWidth(Constants.stackWidth)
     }
     
     // MARK: Button press functions
@@ -139,12 +171,14 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     func displayStart(_ viewModel: Model.Start.ViewModel) {
         // Change background color to init rgb values
         changeBackground(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
+        updateActionButtonColors(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
         wish1View.updateSliders(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
     }
     
     // Sets background to given color
     func displayColorUpdate(_ viewModel: Model.ColorUpdate.ViewModel) {
         changeBackground(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
+        updateActionButtonColors(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
         wish1View.updateSliders(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
     }
     
@@ -156,6 +190,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     // Sets background to given random color
     func displayRandomColor(_ viewModel: Model.RandomColor.ViewModel) {
         changeBackground(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
+        updateActionButtonColors(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
         wish1View.updateSliders(red: viewModel.red, green: viewModel.green, blue: viewModel.blue)
     }
     
@@ -168,6 +203,20 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         },
                        completion: { [weak self] _ in
             self?.wish1View.randomButton.isEnabled = true
+        }
+        )
+    }
+    
+    // Changes action button colors depending on the bg color
+    private func updateActionButtonColors(red: CGFloat, green: CGFloat, blue: CGFloat) {
+        let inversedRed = 1 - red
+        let inversedGreen = 1 - green
+        let inversedBlue = 1 - blue
+        
+        UIView.animate(withDuration: 1.0,
+                       animations: {
+            self.addWishButton.backgroundColor = UIColor(red: inversedRed, green: inversedGreen, blue: inversedBlue, alpha: Constants.alpha)
+            self.scheduleButton.backgroundColor = UIColor(red: inversedRed, green: inversedGreen, blue: inversedBlue, alpha: Constants.alpha)
         }
         )
     }

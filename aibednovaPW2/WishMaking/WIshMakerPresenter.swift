@@ -51,4 +51,10 @@ final class WishMakerPresenter : WishMakerPresentationLogic {
     func presentAddWishViewController(_ response: Model.ShowAddWishViewController.Response) {
         view?.present(response.wishStoringViewController, animated: true)
     }
+    
+    func presentCalendarViewController(_ response: Model.ShowCalendarViewController.Response) {
+        let vc = response.calendarViewController
+        let nc = view?.navigationController
+        nc?.pushViewController(vc, animated: true)
+    }
 }

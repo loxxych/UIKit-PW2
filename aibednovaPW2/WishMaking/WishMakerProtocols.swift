@@ -12,6 +12,7 @@ protocol WishMakerBusinessLogic {
     func toggleSliders(_ request: Model.ToggleSliders.Request)
     func generateRandomColor(_ request: Model.RandomColor.Request)
     func showAddWishViewController(_ request: Model.ShowAddWishViewController.Request)
+    func showCalendarViewController(_ request: Model.ShowCalendarViewController.Request)
 }
 
 protocol WishMakerPresentationLogic {
@@ -21,4 +22,5 @@ protocol WishMakerPresentationLogic {
     func presentToggleSliders(_ response: Model.ToggleSliders.Response)
     func presentRandomColor(_ response: Model.RandomColor.Response)
     func presentAddWishViewController(_ response: Model.ShowAddWishViewController.Response)
+    func presentCalendarViewController(_ response: Model.ShowCalendarViewController.Response)
 }

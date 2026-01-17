@@ -76,6 +76,13 @@ final class WishMakerInteractor : WishMakerBusinessLogic {
         presenter.presentAddWishViewController(Model.ShowAddWishViewController.Response(wishStoringViewController: wishStoringVC))
     }
     
+    // Shows the wish calendar screen
+    func showCalendarViewController(_ request: Model.ShowCalendarViewController.Request) -> Void {
+        let CalendarVC = WishCalendarAssembly.build()
+        
+        presenter.presentCalendarViewController(Model.ShowCalendarViewController.Response(calendarViewController: CalendarVC))
+    }
+    
     // Switches background color to a random color
     func generateRandomColor(_ request: Model.RandomColor.Request) {
         redValue = CGFloat.random(in: Constants.minSliderValue...Constants.maxSliderValue)

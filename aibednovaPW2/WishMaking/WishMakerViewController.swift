@@ -141,6 +141,8 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         scheduleButton.setTitle(Constants.scheduleButtonText, for: .normal)
         scheduleButton.backgroundColor = Constants.scheduleButtonColor
         scheduleButton.setTitleColor(Constants.textColor, for: .normal)
+        
+        scheduleButton.addTarget(self, action: #selector(scheduleButtonPressed), for: .touchUpInside)
     }
     
     // MARK: - Action stack view configuration
@@ -162,9 +164,13 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         actionStackView.setWidth(Constants.stackWidth)
     }
     
-    // MARK: Button press functions
+    // MARK: - Button press functions
     @objc func addWishButtonPressed() {
         interactor.showAddWishViewController(Model.ShowAddWishViewController.Request())
+    }
+    
+    @objc func scheduleButtonPressed() {
+        interactor.showCalendarViewController(Model.ShowCalendarViewController.Request())
     }
     
     // MARK: - Display logic

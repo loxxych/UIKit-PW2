@@ -87,4 +87,12 @@ enum WishMakerModel {
             let wishStoringViewController: UIViewController
         }
     }
+    
+    enum ShowCalendarViewController {
+        struct Request { }
+        
+        struct Response {
+            let calendarViewController: UIViewController
+        }
+    }
 }

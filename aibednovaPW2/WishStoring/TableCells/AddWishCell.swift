@@ -106,11 +106,9 @@ final class AddWishCell: UITableViewCell {
         sendButton.imageView?.contentMode = .scaleAspectFit
         sendButton.tintColor = .white
         
-        sendButton.pinRight(to: wrap, Constants.elementSpacing)
         sendButton.backgroundColor = .systemBlue
         sendButton.setTitleColor(.white, for: .normal)
         sendButton.layer.cornerRadius = Constants.sendButtonCornerRadius
-        sendButton.isUserInteractionEnabled = true
         sendButton.isUserInteractionEnabled = true
         
         sendButton.pinTop(to: wrap, Constants.elementSpacing)

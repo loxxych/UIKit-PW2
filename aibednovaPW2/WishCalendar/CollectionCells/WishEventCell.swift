@@ -26,6 +26,8 @@ class WishEventCell : UICollectionViewCell {
         static let dateFont: UIFont = .systemFont(ofSize: 15)
         static let startDateText: String = "Start Date: "
         static let endDateText: String = "End Date: "
+        static let dateFormat: String = "yyyy-MM-dd"
+        static let cellIdentifier: String = "WishEventCell"
         
         // Colors
         static let backgroundColor: UIColor = .systemGray6
@@ -34,13 +36,19 @@ class WishEventCell : UICollectionViewCell {
     }
     
     // MARK: - Fields
-    static let reuseIdentifier: String = "WishEventCell"
+    static let reuseIdentifier: String = Constants.cellIdentifier
     private let wrapView: UIView = UIView()
     private let titleLabel: UILabel = UILabel()
     private let descriptionLabel: UILabel = UILabel()
     private let startDateLabel: UILabel = UILabel()
     private let endDateLabel: UILabel = UILabel()
     
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = Constants.dateFormat
+        return formatter
+    }()
+
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -106,7 +114,8 @@ class WishEventCell : UICollectionViewCell {
     func configure(with event: WishEventModel) {
         titleLabel.text = event.title
         descriptionLabel.text = event.description
-        startDateLabel.text = "\(Constants.startDateText) \(event.startDate)"
-        endDateLabel.text = "\(Constants.endDateText) \(event.endDate)"
+        startDateLabel.text = "\(Constants.startDateText) \(dateFormatter.string(from: event.startDate))"
+        endDateLabel.text = "\(Constants.endDateText) \(dateFormatter.string(from: event.endDate))"
     }
+
 }

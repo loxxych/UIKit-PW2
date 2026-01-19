@@ -12,6 +12,8 @@ class WishEventTextFieldStack : UIView {
     private enum Constants {
         // Text
         static let errorMsg: String = "init(coder:) has not been implemented"
+        static let startDateTitle: String = "Start Date"
+        static let endDateTitle: String = "End Date"
         
         // UI Constraint properties
         static let spacing: CGFloat = 30
@@ -24,6 +26,8 @@ class WishEventTextFieldStack : UIView {
     private var descriptionTextField: DescriptionTextField = .init()
     private let buttonContainer = UIView()
     private var saveButton: UIButton = .init(type: .system)
+    private let startDateField: DatePickerField = DatePickerField(title: Constants.startDateTitle)
+        private let endDateField: DatePickerField = DatePickerField(title: Constants.endDateTitle)
     private var stackView: UIStackView = UIStackView()
     
     var saveEvent: ((WishEventModel) -> Void)?
@@ -72,6 +76,8 @@ class WishEventTextFieldStack : UIView {
 
         stackView.addArrangedSubview(titleTextField)
         stackView.addArrangedSubview(descriptionTextField)
+        stackView.addArrangedSubview(startDateField)
+        stackView.addArrangedSubview(endDateField)
         stackView.addArrangedSubview(buttonContainer)
 
         stackView.pin(to: self)
@@ -81,7 +87,10 @@ class WishEventTextFieldStack : UIView {
     @objc private func saveButtonPressed() {
         let title: String = titleTextField.getTextInput()
         let description: String = descriptionTextField.getTextInput()
-        let eventModel: WishEventModel = WishEventModel(title: title, description: description, startDate: Date(), endDate: Date())
+        let startDate = startDateField.getDate()
+        let endDate = endDateField.getDate()
+        
+        let eventModel: WishEventModel = WishEventModel(title: title, description: description, startDate: startDate, endDate: endDate)
         
         titleTextField.clear()
         descriptionTextField.clear()

@@ -9,9 +9,14 @@ import EventKit
 
 final class CalendarManager: CalendarManaging {
     // MARK: - Constants
+    private enum Constants {
+        static let errorMsg: String = "Failed to save event with error : "
+    }
+    
     // MARK: - Fields
     private let eventStore : EKEventStore = EKEventStore()
     
+    // MARK: - Functions
     func create(eventModel: CalendarEventModel) -> Bool {
         var result: Bool = false
         let group = DispatchGroup()
@@ -40,7 +45,7 @@ final class CalendarManager: CalendarManaging {
             do {
                 try self.eventStore.save(event, span: .thisEvent)
             } catch let error as NSError {
-                print("Failed to save event with error : \(error)")
+                print("\(Constants.errorMsg)\(error)")
                 completion?(false)
             }
             completion?(true)

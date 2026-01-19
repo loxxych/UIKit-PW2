@@ -17,4 +17,10 @@ enum WishEventCreationModel {
             }
         }
     }
+    
+    enum CalendarCreation {
+        struct Response {
+            let success: Bool
+        }
+    }
 }

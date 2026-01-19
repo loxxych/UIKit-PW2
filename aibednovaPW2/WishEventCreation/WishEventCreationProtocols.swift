@@ -14,5 +14,5 @@ protocol WishEventCreationBusinessLogic {
 protocol WishEventCreationPresentationLogic {
     typealias Model = WishEventCreationModel
     
-    func addWish()
+    func presentCalendarCreationResult(_ response: Model.CalendarCreation.Response)
 }

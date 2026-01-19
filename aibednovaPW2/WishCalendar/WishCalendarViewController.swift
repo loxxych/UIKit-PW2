@@ -12,6 +12,10 @@ final class WishCalendarViewController: UIViewController {
     
     // MARK: - Constants
     private enum Constants {
+        // Text
+        static let titleText: String = "Wish calendar"
+        static let titleFont: UIFont = .monospacedSystemFont(ofSize: 24, weight: .bold)
+        
         // UI constraints and properties
         static let contentInset: UIEdgeInsets = .init(top: 20, left: 20, bottom: 20, right: 20)
         static let collectionTop: CGFloat = 40
@@ -31,6 +35,7 @@ final class WishCalendarViewController: UIViewController {
     // MARK: - Fields
     private let interactor: WishCalendarBusinessLogic
     
+    private let titleLabel: UILabel = .init()
     private let addButton: UIButton = .init(type: .roundedRect)
     private let collectionView: UICollectionView = UICollectionView(
         frame: .zero,
@@ -54,10 +59,21 @@ final class WishCalendarViewController: UIViewController {
     // MARK: - UI Configuration
     private func configureUI() {
         view.backgroundColor = Constants.backgroundColor
+        configureTitle()
         configureAddButton()
         configureCollection()
     }
     
+    // MARK: - Title configuration
+    private func configureTitle() {
+        view.addSubview(titleLabel)
+        
+        titleLabel.font = Constants.titleFont
+        titleLabel.text = Constants.titleText
+        
+        titleLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        titleLabel.pinCenterX(to: view)
+    }
     // MARK: - Collection configuration
     private func configureCollection() {
         view.addSubview(collectionView)
@@ -98,9 +114,16 @@ final class WishCalendarViewController: UIViewController {
         addButton.isUserInteractionEnabled = true
 
         addButton.pinCenterX(to: view)
-        addButton.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.addButtonTop)
+        addButton.pinTop(to: titleLabel.bottomAnchor, Constants.addButtonTop)
         addButton.setWidth(Constants.addButtonSize)
         addButton.setHeight(Constants.addButtonSize)
+        
+        addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+    }
+    
+    // MARK: - Button press functions
+    @objc private func addButtonPressed() {
+        interactor.showWishEventCreationViewController(Model.ShowWishEventCreationViewController.Request())
     }
 }
 
@@ -124,15 +147,6 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         guard let wishEventCell = cell as? WishEventCell else {
             return cell
         }
-        
-        wishEventCell.configure(
-            with: WishEventModel(
-                title: "Test",
-                description: "Test description",
-                startDate: "Start date",
-                endDate: "End date"
-            )
-        )
         
         return cell
     }

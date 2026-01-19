@@ -12,7 +12,7 @@ final class WishStoringInteractor : WishStoringBusinessLogic {
     enum Constants {
         // Strings
         static let wishesKey: String = "wishes"
-        static let errorMsg: String = "Unhandled error"
+        static let errorMsg: String = "Unable to save context"
     }
     
     // MARK: - Fields

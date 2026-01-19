@@ -93,4 +93,14 @@ class TitleTextField: UIView {
         textField.pinLeft(to: wrapView.leadingAnchor, Constants.textFieldLeft)
     }
     
+    // MARK: - Utility functions
+    func getTextInput() -> String {
+        return textField.text ?? ""
+    }
+    
+    func clear() {
+        textField.text = ""
+        textField.resignFirstResponder()
+    }
+    
 }

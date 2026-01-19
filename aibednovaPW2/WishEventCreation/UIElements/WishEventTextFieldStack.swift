@@ -26,6 +26,8 @@ class WishEventTextFieldStack : UIView {
     private var saveButton: UIButton = .init(type: .system)
     private var stackView: UIStackView = UIStackView()
     
+    var saveEvent: ((WishEventModel) -> Void)?
+    
     // MARK: - Lifecycle
     init() {
         super.init(frame: .zero)
@@ -55,7 +57,10 @@ class WishEventTextFieldStack : UIView {
         
         saveButton.setWidth(Constants.saveButtonWidth)
         saveButton.setHeight(Constants.saveButtonHeight)
-
+        buttonContainer.setWidth(Constants.saveButtonWidth)
+        buttonContainer.setHeight(Constants.saveButtonHeight)
+        
+        saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
     // MARK: - Stack view configuration
@@ -70,5 +75,17 @@ class WishEventTextFieldStack : UIView {
         stackView.addArrangedSubview(buttonContainer)
 
         stackView.pin(to: self)
+    }
+    
+    // MARK: - Button press functions
+    @objc private func saveButtonPressed() {
+        let title: String = titleTextField.getTextInput()
+        let description: String = descriptionTextField.getTextInput()
+        let eventModel: WishEventModel = WishEventModel(title: title, description: description, startDate: Date(), endDate: Date())
+        
+        titleTextField.clear()
+        descriptionTextField.clear()
+        
+        saveEvent?(eventModel)
     }
 }

@@ -40,10 +40,11 @@ final class AddWishCell: UITableViewCell {
     // Ids
     static let reuseId: String = Constants.id
     
-    // Closures
     let textView: UITextView = UITextView()
     let sendButton: UIButton = UIButton()
     let wrap: UIView = UIView()
+    
+    // Closures
     var addWish: ((String) -> ())?
     
     // MARK: - Lifecycle

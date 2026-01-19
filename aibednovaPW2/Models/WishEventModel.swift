@@ -5,13 +5,15 @@
 //  Created by loxxy on 16.01.2026.
 //
 
+import Foundation
+
 class WishEventModel {
     var title: String
     var description: String
-    var startDate: String
-    var endDate: String
+    var startDate: Date
+    var endDate: Date
     
-    init(title: String, description: String, startDate: String, endDate: String) {
+    init(title: String, description: String, startDate: Date, endDate: Date) {
         self.title = title
         self.description = description
         self.endDate = endDate

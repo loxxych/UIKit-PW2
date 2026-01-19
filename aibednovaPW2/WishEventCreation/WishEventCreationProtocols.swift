@@ -8,9 +8,11 @@
 protocol WishEventCreationBusinessLogic {
     typealias Model = WishEventCreationModel
     
+    func addWish(_ request: Model.AddWishEvent.Request)
 }
 
 protocol WishEventCreationPresentationLogic {
     typealias Model = WishEventCreationModel
     
+    func addWish()
 }

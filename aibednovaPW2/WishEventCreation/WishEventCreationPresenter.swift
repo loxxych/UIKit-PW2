@@ -8,5 +8,7 @@
 class WishEventCreationPresenter : WishEventCreationPresentationLogic {
     weak var view: WishEventCreationViewController?
     
-    
+    func addWish() {
+        
+    }
 }

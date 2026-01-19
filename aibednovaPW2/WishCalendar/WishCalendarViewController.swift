@@ -35,6 +35,9 @@ final class WishCalendarViewController: UIViewController {
     // MARK: - Fields
     private let interactor: WishCalendarBusinessLogic
     
+    private var events: [WishEventModel] = []
+    
+    // UI
     private let titleLabel: UILabel = .init()
     private let addButton: UIButton = .init(type: .roundedRect)
     private let collectionView: UICollectionView = UICollectionView(
@@ -59,9 +62,12 @@ final class WishCalendarViewController: UIViewController {
     // MARK: - UI Configuration
     private func configureUI() {
         view.backgroundColor = Constants.backgroundColor
+        
         configureTitle()
         configureAddButton()
         configureCollection()
+        
+        interactor.loadStart()
     }
     
     // MARK: - Title configuration
@@ -74,6 +80,7 @@ final class WishCalendarViewController: UIViewController {
         titleLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         titleLabel.pinCenterX(to: view)
     }
+    
     // MARK: - Collection configuration
     private func configureCollection() {
         view.addSubview(collectionView)
@@ -123,7 +130,18 @@ final class WishCalendarViewController: UIViewController {
     
     // MARK: - Button press functions
     @objc private func addButtonPressed() {
-        interactor.showWishEventCreationViewController(Model.ShowWishEventCreationViewController.Request())
+        let updateCalendarEvents: (() -> Void)? = {
+            self.interactor.loadEvents()
+        }
+        
+        interactor.showWishEventCreationViewController(Model.ShowWishEventCreationViewController.Request(updateCalendarEvents: updateCalendarEvents))
+    }
+    
+    // MARK: - Display logic
+    func loadEvents(viewModel: Model.Fetch.ViewModel) {
+        events = viewModel.events
+        
+        collectionView.reloadData()
     }
 }
 
@@ -134,7 +152,7 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        return events.count
     }
     
     func collectionView(
@@ -142,11 +160,12 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
-                                                        WishEventCell.reuseIdentifier, for: indexPath)
-        guard let wishEventCell = cell as? WishEventCell else {
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                                                        WishEventCell.reuseIdentifier, for: indexPath) as? WishEventCell else {
+            return UICollectionViewCell()
         }
+        
+        cell.configure(with: events[indexPath.item])
         
         return cell
     }

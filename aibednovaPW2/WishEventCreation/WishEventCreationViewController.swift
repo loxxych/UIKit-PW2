@@ -62,6 +62,10 @@ final class WishEventCreationViewController : UIViewController {
     private func configureStackView() {
         view.addSubview(wishEventTextFieldStack)
         
+        wishEventTextFieldStack.saveEvent = { model in
+            self.interactor.addWish(WishEventCreationModel.AddWishEvent.Request(wishEvent: model))
+        }
+        
         wishEventTextFieldStack.pinTop(to: wrap.topAnchor, Constants.stackTop)
         wishEventTextFieldStack.pinHorizontal(to: wrap, Constants.stackLeft)
     }

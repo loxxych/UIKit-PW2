@@ -12,6 +12,8 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
     private enum Constants {
         static let containerName: String = "WishDataModel"
         static let errorMsg: String = "Failed to fetch WishEvent: "
+        static let format: String = "title == %@ AND startDate == %@"
+        static let deleteErrorMsg: String = "Delete error: "
     }
     
     // MARK: - Fields
@@ -45,7 +47,7 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
         do {
             try events = context.fetch(fetchRequest)
         } catch {
-            fatalError("\(Constants.errorMsg)\(error)")
+            fatalError("\(Constants.errorMsg): \(error)")
         }
         
         let newIndexPath = IndexPath(row: events.count - 1, section: 0)
@@ -57,9 +59,9 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
         let fetchRequest: NSFetchRequest<WishEvent> = WishEvent.fetchRequest()
 
             fetchRequest.predicate = NSPredicate(
-                format: "title == %@ AND startDate == %@",
-                request.event.title ?? "",
-                request.event.startDate as! NSDate
+                format: Constants.format,
+                request.event.title,
+                request.event.startDate as NSDate
             )
 
             do {
@@ -67,7 +69,7 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
                 results.forEach { context.delete($0) }
                 try context.save()
             } catch {
-                print("Delete error: \(error)")
+                print("\(Constants.deleteErrorMsg): \(error)")
             }
 
             loadEvents()

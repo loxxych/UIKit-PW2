@@ -94,8 +94,8 @@ final class WishMakerInteractor : WishMakerBusinessLogic {
         
         presenter.presentRandomColor(Model.RandomColor.Response(
             red: redValue,
-            green: blueValue,
-            blue: greenValue
+            green: greenValue,
+            blue: blueValue
         ))
     }
     

@@ -12,6 +12,7 @@ class WishEventCreationInteractor : WishEventCreationBusinessLogic {
     private enum Constants {
         // Strings
         static let containerName: String = "WishDataModel"
+        static let unresolvedErrorMsg: String = "Unresolved error"
     }
     
     // MARK: - Fields
@@ -26,7 +27,7 @@ class WishEventCreationInteractor : WishEventCreationBusinessLogic {
         let container = NSPersistentContainer(name: Constants.containerName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                fatalError("\(Constants.unresolvedErrorMsg) \(error): \(error.userInfo)")
             }
         })
         return container
@@ -73,7 +74,7 @@ class WishEventCreationInteractor : WishEventCreationBusinessLogic {
             } catch {
                 context.rollback()
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                fatalError("\(Constants.unresolvedErrorMsg): \(nserror), \(nserror.userInfo)")
             }
         }
     }

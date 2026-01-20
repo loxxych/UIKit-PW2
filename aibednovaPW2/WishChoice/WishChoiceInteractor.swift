@@ -13,6 +13,7 @@ final class WishChoiceInteractor : WishChoiceBusinessLogic {
         // Text
         static let containerName: String = "WishDataModel"
         static let fetchErrorMsg: String = "Fetch error"
+        static let unresolvedErrorMsg: String = "Unresolved error"
     }
     
     // MARK: - Fields
@@ -23,7 +24,7 @@ final class WishChoiceInteractor : WishChoiceBusinessLogic {
         let container = NSPersistentContainer(name: Constants.containerName)
           container.loadPersistentStores(completionHandler: { (storeDescription, error) in
               if let error = error as NSError? {
-                  fatalError("Unresolved error \(error), \(error.userInfo)")
+                  fatalError("\(Constants.unresolvedErrorMsg) \(error), \(error.userInfo)")
               }
           })
           return container

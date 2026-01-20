@@ -14,6 +14,7 @@ class TitleTextField: UIView {
         static let errorMsg: String = "init(coder:) has not been implemented"
         static let titleText: String = "Wish title"
         static let textFieldPlaceholder: String = "Enter your wish title"
+        static let defaultText: String = ""
         static let titleFont: UIFont = .systemFont(ofSize: 17, weight: .bold)
         
         // UI Constraint properties
@@ -95,11 +96,11 @@ class TitleTextField: UIView {
     
     // MARK: - Utility functions
     func getTextInput() -> String {
-        return textField.text ?? ""
+        return textField.text ?? Constants.defaultText
     }
     
     func clear() {
-        textField.text = ""
+        textField.text = Constants.defaultText
         textField.resignFirstResponder()
     }
     

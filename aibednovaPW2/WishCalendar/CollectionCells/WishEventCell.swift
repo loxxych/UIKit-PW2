@@ -28,6 +28,7 @@ class WishEventCell : UICollectionViewCell {
         static let endDateText: String = "End Date: "
         static let dateFormat: String = "yyyy-MM-dd"
         static let cellIdentifier: String = "WishEventCell"
+        static let errorMsg: String = "init(coder:) has not been implemented"
         
         // Colors
         static let backgroundColor: UIColor = .systemGray6
@@ -57,7 +58,7 @@ class WishEventCell : UICollectionViewCell {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.errorMsg)
     }
     
     // MARK: - UI Configurtion

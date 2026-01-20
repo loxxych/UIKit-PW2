@@ -15,6 +15,7 @@ class DescriptionTextField: UIView {
         static let titleText: String = "Wish description"
         static let textFieldPlaceholder: String = "Enter your wish description"
         static let titleFont: UIFont = .systemFont(ofSize: 17, weight: .bold)
+        static let defaultText: String = ""
         
         // UI Constraint properties
         static let wrapHeight: CGFloat = 120
@@ -92,11 +93,11 @@ class DescriptionTextField: UIView {
     
     // MARK: - Utility functions
     func getTextInput() -> String {
-        return textField.text ?? ""
+        return textField.text ?? Constants.defaultText
     }
     
     func clear() {
-        textField.text = ""
+        textField.text = Constants.defaultText
         textField.resignFirstResponder()
     }
     

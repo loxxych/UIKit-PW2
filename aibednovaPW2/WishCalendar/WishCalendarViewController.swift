@@ -14,6 +14,10 @@ final class WishCalendarViewController: UIViewController {
     private enum Constants {
         // Text
         static let titleText: String = "Wish calendar"
+        static let deleteAlertMsg: String = "Delete event?"
+        static let deleteActionText: String = "Delete"
+        static let cancelActionText: String = "Cancel"
+
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: 24, weight: .bold)
         
         // UI constraints and properties
@@ -22,10 +26,14 @@ final class WishCalendarViewController: UIViewController {
         static let addButtonTop: CGFloat = 10
         static let addButtonSize: CGFloat = 40
         static let buttonCornerRadius: CGFloat = addButtonSize / 2
-        
+        static let cellWidthBound: CGFloat = 10
+        static let cellHeight: CGFloat = 100
+        static let collectionSpacing: CGFloat = 0
+
         // Colors
         static let addButtonColor: UIColor = .systemBlue
         static let addButtonTintColor: UIColor = .white
+        static let collectionBackgroundColor: UIColor = .clear
         
         // Images
         static let addButtonImage: UIImage? = UIImage(systemName: "plus")
@@ -89,15 +97,15 @@ final class WishCalendarViewController: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = Constants.collectionBackgroundColor
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = Constants.contentInset
         
         if let layout = collectionView.collectionViewLayout as?
             UICollectionViewFlowLayout {
-            layout.minimumInteritemSpacing = 0
-            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = Constants.collectionSpacing
+            layout.minimumLineSpacing = Constants.collectionSpacing
             layout.invalidateLayout()
         }
         
@@ -148,13 +156,13 @@ final class WishCalendarViewController: UIViewController {
     
     private func showDeleteAlert(for event: WishEventModel) {
         let alert = UIAlertController(
-                title: "Event actions",
-                message: "What do you want to do with this event?",
+            title: Constants.deleteAlertMsg,
+                message: nil,
                 preferredStyle: .actionSheet
             )
 
             let deleteAction = UIAlertAction(
-                title: "Delete",
+                title: Constants.deleteActionText,
                 style: .destructive
             ) { [weak self] _ in
                 self?.interactor.deleteEvent(
@@ -163,7 +171,7 @@ final class WishCalendarViewController: UIViewController {
             }
 
             let cancelAction = UIAlertAction(
-                title: "Cancel",
+                title: Constants.cancelActionText,
                 style: .cancel
             )
 
@@ -208,8 +216,7 @@ extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        // Adjust cell size as needed
-        return CGSize(width: collectionView.bounds.width - 10, height: 100)
+        return CGSize(width: collectionView.bounds.width - Constants.cellWidthBound, height: Constants.cellHeight)
     }
     func collectionView(
         _

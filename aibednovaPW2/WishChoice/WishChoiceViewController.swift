@@ -15,6 +15,7 @@ final class WishChoiceViewController : UIViewController {
         // Strings
         static let errorMsg: String = "init(coder:) has not been implemented"
         static let titleText: String = "Choose saved wish"
+        static let defaultText: String  ""
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: 20, weight: .bold)
         
         // UI Constraint properties
@@ -152,7 +153,7 @@ extension WishChoiceViewController : UITableViewDelegate {
     ) {
         let wish = wishArray[indexPath.row]
         
-        wishSelected?(wish.wishText ?? "")
+        wishSelected?(wish.wishText ?? Constants.defaultText)
         dismiss(animated: true)
     }
 }

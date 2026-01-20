@@ -12,6 +12,7 @@ final class WishEventCreationViewController : UIViewController {
     private enum Constants {
         // Text
         static let titleText: String = "Add a new wish event"
+        static let errorMsg: String = "init(coder:) has not been implemented"
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: 20, weight: .bold)
         
         // UI Constraint properties
@@ -41,7 +42,7 @@ final class WishEventCreationViewController : UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.errorMsg)
     }
     
     override func viewDidLoad() {

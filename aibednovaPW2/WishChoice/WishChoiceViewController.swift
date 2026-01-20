@@ -15,7 +15,7 @@ final class WishChoiceViewController : UIViewController {
         // Strings
         static let errorMsg: String = "init(coder:) has not been implemented"
         static let titleText: String = "Choose saved wish"
-        static let defaultText: String  ""
+        static let defaultText: String = ""
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: 20, weight: .bold)
         
         // UI Constraint properties

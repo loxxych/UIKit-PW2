@@ -48,6 +48,10 @@ class WishEventCreationInteractor : WishEventCreationBusinessLogic {
         let event: WishEvent = WishEvent(context: context)
         let requestEvent = request.wishEvent
         
+        if (requestEvent.startDate > requestEvent.endDate) {
+            return
+        }
+        
         event.title = requestEvent.title
         event.eventDescription = requestEvent.description
         event.startDate = requestEvent.startDate

@@ -8,8 +8,8 @@
 protocol WishCalendarBusinessLogic {
     typealias Model = WishCalendarModel
 
-    func loadStart()
     func loadEvents()
+    func deleteEvent(_ request: Model.Delete.Request)
     func showWishEventCreationViewController(_ request: Model.ShowWishEventCreationViewController.Request)
 }
 

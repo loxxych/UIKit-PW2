@@ -83,5 +83,8 @@ class WishEventCreationInteractor : WishEventCreationBusinessLogic {
         completion?(success)
     }
     
+    func showChooseWishViewController() {
+        presenter.showChooseWishViewController()
+    }
     
 }

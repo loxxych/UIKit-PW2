@@ -16,6 +16,7 @@ final class WishMakerInteractor : WishMakerBusinessLogic {
         static let redInitValue: CGFloat = 0.5
         static let blueInitValue: CGFloat = 0.5
         static let greenInitValue: CGFloat = 0.5
+        static let alpha: CGFloat = 1
     }
     
     // MARK: - Fields
@@ -71,14 +72,16 @@ final class WishMakerInteractor : WishMakerBusinessLogic {
     
     // Shows the add wish screen
     func showAddWishViewController(_ request: Model.ShowAddWishViewController.Request) -> Void {
-        let wishStoringVC = WishStoringAssembly.build()
+        let color = UIColor(red: redValue, green: greenValue, blue: blueValue, alpha: Constants.alpha)
+        let wishStoringVC = WishStoringAssembly.build(color: color)
         
         presenter.presentAddWishViewController(Model.ShowAddWishViewController.Response(wishStoringViewController: wishStoringVC))
     }
     
     // Shows the wish calendar screen
     func showCalendarViewController(_ request: Model.ShowCalendarViewController.Request) -> Void {
-        let CalendarVC = WishCalendarAssembly.build()
+        let color = UIColor(red: redValue, green: greenValue, blue: blueValue, alpha: Constants.alpha)
+        let CalendarVC = WishCalendarAssembly.build(color: color)
         
         presenter.presentCalendarViewController(Model.ShowCalendarViewController.Response(calendarViewController: CalendarVC))
     }

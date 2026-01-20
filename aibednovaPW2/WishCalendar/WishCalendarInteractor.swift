@@ -11,6 +11,7 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
     // MARK: - Constants
     private enum Constants {
         static let containerName: String = "WishDataModel"
+        static let errorMsg: String = "Failed to fetch WishEvent: "
     }
     
     // MARK: - Fields
@@ -39,21 +40,37 @@ class WishCalendarInteractor : WishCalendarBusinessLogic {
     }
     
     // MARK: - Business logic
-    func loadStart() {
-        loadEvents()
-    }
-    
     func loadEvents() {
         let fetchRequest: NSFetchRequest<WishEvent> = WishEvent.fetchRequest()
         do {
             try events = context.fetch(fetchRequest)
         } catch {
-            fatalError("Failed to fetch WishEvent: \(error)")
+            fatalError("\(Constants.errorMsg)\(error)")
         }
         
-        let newIndexPath = IndexPath(row: events.count - 1, section: 1)
+        let newIndexPath = IndexPath(row: events.count - 1, section: 0)
         
         presenter.presentLoadEvents(Model.Fetch.Response(events: events, indexPath: newIndexPath))
+    }
+    
+    func deleteEvent(_ request: Model.Delete.Request) {
+        let fetchRequest: NSFetchRequest<WishEvent> = WishEvent.fetchRequest()
+
+            fetchRequest.predicate = NSPredicate(
+                format: "title == %@ AND startDate == %@",
+                request.event.title ?? "",
+                request.event.startDate as! NSDate
+            )
+
+            do {
+                let results = try context.fetch(fetchRequest)
+                results.forEach { context.delete($0) }
+                try context.save()
+            } catch {
+                print("Delete error: \(error)")
+            }
+
+            loadEvents()
     }
     
     func showWishEventCreationViewController(_ request: Model.ShowWishEventCreationViewController.Request) {

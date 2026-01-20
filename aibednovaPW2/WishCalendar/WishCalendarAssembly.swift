@@ -8,11 +8,12 @@
 import UIKit
 
 enum WishCalendarAssembly {
-    static func build() -> UIViewController {
+    static func build(color: UIColor) -> UIViewController {
         let presenter: WishCalendarPresenter = WishCalendarPresenter()
         let interactor: WishCalendarInteractor = WishCalendarInteractor(presenter: presenter)
         let viewController: WishCalendarViewController = WishCalendarViewController(
-            interactor: interactor
+            interactor: interactor,
+            bgColor: color
         )
         
         presenter.view = viewController

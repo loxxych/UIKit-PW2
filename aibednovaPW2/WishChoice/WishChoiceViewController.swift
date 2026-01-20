@@ -1,23 +1,26 @@
 //
-//  WishEventCreationViewController.swift
+//  WishChoiceViewController.swift
 //  aibednovaPW2
 //
-//  Created by loxxy on 16.01.2026.
+//  Created by loxxy on 20.01.2026.
 //
 
 import UIKit
 
-final class WishEventCreationViewController : UIViewController {
+final class WishChoiceViewController : UIViewController {
+    typealias Model = WishChoiceModel
+    
     // MARK: - Constants
     private enum Constants {
-        // Text
-        static let titleText: String = "Add a new wish event"
+        // Strings
+        static let errorMsg: String = "init(coder:) has not been implemented"
+        static let titleText: String = "Choose saved wish"
         static let titleFont: UIFont = .monospacedSystemFont(ofSize: 20, weight: .bold)
         
         // UI Constraint properties
         static let titleTop: CGFloat = 10
         static let wrapWidth: CGFloat = 380
-        static let wrapHeight: CGFloat = 720
+        static let wrapHeight: CGFloat = 700
         static let wrapCornerRadius: CGFloat = 10
         static let stackTop: CGFloat = 20
         static let stackLeft: CGFloat = 20
@@ -28,24 +31,26 @@ final class WishEventCreationViewController : UIViewController {
     }
     
     // MARK: - Fields
-    private var interactor: WishEventCreationBusinessLogic
+    private let interactor: WishChoiceBusinessLogic
     
     private let titleLabel: UILabel = .init()
-    private let wishEventTextFieldStack: WishEventTextFieldStack = .init()
     private let wrap: UIView = .init()
     
     // MARK: - Lifecycle
-    init(interactor: WishEventCreationBusinessLogic) {
+    init(interactor: WishChoiceBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.errorMsg)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        interactor.loadWishes()
+        
         configureUI()
     }
     
@@ -55,23 +60,6 @@ final class WishEventCreationViewController : UIViewController {
         
         configureWrap()
         configureTitle()
-        configureStackView()
-    }
-    
-    // MARK: - Stack view configuration
-    private func configureStackView() {
-        view.addSubview(wishEventTextFieldStack)
-        
-        wishEventTextFieldStack.saveEvent = { model in
-            self.interactor.addWish(WishEventCreationModel.AddWishEvent.Request(wishEvent: model))
-        }
-        
-        wishEventTextFieldStack.showChooseWishScreen = {
-            self.interactor.showChooseWishViewController()
-        }
-        
-        wishEventTextFieldStack.pinTop(to: wrap.topAnchor, Constants.stackTop)
-        wishEventTextFieldStack.pinHorizontal(to: wrap, Constants.stackLeft)
     }
     
     // MARK: - Wrap configuration
@@ -95,5 +83,10 @@ final class WishEventCreationViewController : UIViewController {
         
         titleLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.titleTop)
         titleLabel.pinCenterX(to: view)
+    }
+    
+    // MARK: - Display logic
+    func loadWishes(_ viewModel: Model) {
+        
     }
 }

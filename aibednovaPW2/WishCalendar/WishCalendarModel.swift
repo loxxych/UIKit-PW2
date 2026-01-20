@@ -8,16 +8,6 @@
 import UIKit
 
 enum WishCalendarModel {
-    enum Start {
-        struct Response {
-            let events: [WishEvent]
-        }
-        
-        struct ViewModel {
-            let wishes: [WishEventModel]
-        }
-    }
-    
     enum Fetch {
         struct Response {
             let events: [WishEvent]
@@ -27,6 +17,12 @@ enum WishCalendarModel {
         struct ViewModel {
             let events: [WishEventModel]
             let indexPath: IndexPath
+        }
+    }
+    
+    enum Delete {
+        struct Request {
+            let event: WishEventModel
         }
     }
     

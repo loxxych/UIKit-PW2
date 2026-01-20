@@ -40,12 +40,14 @@ final class WishStoringViewController: UIViewController {
     private let table: UITableView = UITableView(frame: .zero, style: .plain)
     
     // Labels
-    let titleView: UILabel = UILabel()
+    private let bgColor: UIColor
+    private let titleView: UILabel = UILabel()
     private var wishArray: [Wish] = []
     
     // MARK: - Lifecycle methods
-    init(interactor: WishStoringBusinessLogic) {
+    init(interactor: WishStoringBusinessLogic, bgColor: UIColor) {
         self.interactor = interactor
+        self.bgColor = bgColor
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,7 +64,7 @@ final class WishStoringViewController: UIViewController {
     
     // MARK: - UI Configuration
     private func configureUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = bgColor
         
         configureTitle()
         configureTableView()

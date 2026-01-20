@@ -17,13 +17,13 @@ class DescriptionTextField: UIView {
         static let titleFont: UIFont = .systemFont(ofSize: 17, weight: .bold)
         
         // UI Constraint properties
-        static let wrapHeight: CGFloat = 160
+        static let wrapHeight: CGFloat = 120
         static let wrapCornerRadius: CGFloat = 15
         static let titleLeft: CGFloat = 15
         static let titleTop: CGFloat = 15
         static let textFieldLeft: CGFloat = 15
         static let textFieldTop: CGFloat = 7
-        static let textFieldHeight: CGFloat = 100
+        static let textFieldHeight: CGFloat = 60
         static let textFieldWidth: CGFloat = 300
         static let textFieldCornerRadius: CGFloat = 5
         

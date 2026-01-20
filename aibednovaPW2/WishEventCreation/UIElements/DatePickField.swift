@@ -10,14 +10,20 @@ import UIKit
 class DatePickerField: UIView {
     // MARK: - Constants
     private enum Constants {
+        // Text
         static let titleFont: UIFont = .systemFont(ofSize: 17, weight: .bold)
-        static let wrapHeight: CGFloat = 120
+        static let errorMsg: String = "init(coder:) has not been implemented"
+        
+        // UI Constraint properties
+        static let wrapHeight: CGFloat = 100
         static let wrapCornerRadius: CGFloat = 15
         static let titleLeft: CGFloat = 15
         static let titleTop: CGFloat = 15
         static let pickerLeft: CGFloat = 15
         static let pickerTop: CGFloat = 7
+        static let pickerHeight: CGFloat = 40
         
+        // Colors
         static let wrapColor: UIColor = .systemGray6
     }
     
@@ -30,11 +36,12 @@ class DatePickerField: UIView {
     init(title: String) {
         super.init(frame: .zero)
         titleLabel.text = title
+        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.errorMsg)
     }
     
     // MARK: - UI Configuration
@@ -46,15 +53,19 @@ class DatePickerField: UIView {
     
     private func configureWrap() {
         addSubview(wrapView)
+        
         wrapView.backgroundColor = Constants.wrapColor
         wrapView.layer.cornerRadius = Constants.wrapCornerRadius
+        
         wrapView.pin(to: self)
         self.setHeight(Constants.wrapHeight)
     }
     
     private func configureTitle() {
         wrapView.addSubview(titleLabel)
+        
         titleLabel.font = Constants.titleFont
+        
         titleLabel.pinLeft(to: wrapView.leadingAnchor, Constants.titleLeft)
         titleLabel.pinTop(to: wrapView.topAnchor, Constants.titleTop)
     }
@@ -66,10 +77,7 @@ class DatePickerField: UIView {
             datePicker.preferredDatePickerStyle = .compact
         }
         
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "ru_RU")
-
-        datePicker.setHeight(40)
+        datePicker.setHeight(Constants.pickerHeight)
         datePicker.pinTop(to: titleLabel.bottomAnchor, Constants.pickerTop)
         datePicker.pinLeft(to: wrapView.leadingAnchor, Constants.pickerLeft)
     }
@@ -77,10 +85,6 @@ class DatePickerField: UIView {
     // MARK: - Utility
     func getDate() -> Date {
         return datePicker.date
-    }
-    
-    func setDate(_ date: Date) {
-        datePicker.date = date
     }
 }
 

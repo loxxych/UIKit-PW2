@@ -24,7 +24,6 @@ final class WishCalendarViewController: UIViewController {
         static let buttonCornerRadius: CGFloat = addButtonSize / 2
         
         // Colors
-        static let backgroundColor: UIColor = .white
         static let addButtonColor: UIColor = .systemBlue
         static let addButtonTintColor: UIColor = .white
         
@@ -38,6 +37,7 @@ final class WishCalendarViewController: UIViewController {
     private var events: [WishEventModel] = []
     
     // UI
+    private let bgColor: UIColor
     private let titleLabel: UILabel = .init()
     private let addButton: UIButton = .init(type: .roundedRect)
     private let collectionView: UICollectionView = UICollectionView(
@@ -45,8 +45,10 @@ final class WishCalendarViewController: UIViewController {
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     
-    init(interactor: WishCalendarBusinessLogic) {
+    // MARK: - Lifecycle
+    init(interactor: WishCalendarBusinessLogic, bgColor: UIColor = .white) {
         self.interactor = interactor
+        self.bgColor = bgColor
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,18 +58,18 @@ final class WishCalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        interactor.loadEvents()
+
         configureUI()
+        
     }
     
     // MARK: - UI Configuration
     private func configureUI() {
-        view.backgroundColor = Constants.backgroundColor
-        
+        view.backgroundColor = bgColor
         configureTitle()
         configureAddButton()
         configureCollection()
-        
-        interactor.loadStart()
     }
     
     // MARK: - Title configuration
@@ -87,7 +89,7 @@ final class WishCalendarViewController: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = Constants.contentInset
@@ -143,6 +145,33 @@ final class WishCalendarViewController: UIViewController {
         
         collectionView.reloadData()
     }
+    
+    private func showDeleteAlert(for event: WishEventModel) {
+        let alert = UIAlertController(
+                title: "Event actions",
+                message: "What do you want to do with this event?",
+                preferredStyle: .actionSheet
+            )
+
+            let deleteAction = UIAlertAction(
+                title: "Delete",
+                style: .destructive
+            ) { [weak self] _ in
+                self?.interactor.deleteEvent(
+                    Model.Delete.Request(event: event)
+                )
+            }
+
+            let cancelAction = UIAlertAction(
+                title: "Cancel",
+                style: .cancel
+            )
+
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+
+            present(alert, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -187,6 +216,7 @@ extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
         collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        print("Cell tapped at index \(indexPath.item)")
+        let event = events[indexPath.item]
+        showDeleteAlert(for: event)
     }
 }

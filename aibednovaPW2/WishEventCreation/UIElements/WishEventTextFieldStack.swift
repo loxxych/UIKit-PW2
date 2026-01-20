@@ -14,11 +14,19 @@ class WishEventTextFieldStack : UIView {
         static let errorMsg: String = "init(coder:) has not been implemented"
         static let startDateTitle: String = "Start Date"
         static let endDateTitle: String = "End Date"
-        
+        static let orText: String = "or"
+        static let chooseButtonText: String = "Choose from saved wishes"
+        static let saveButtonText: String = "Save"
+
         // UI Constraint properties
         static let spacing: CGFloat = 30
         static let saveButtonWidth: CGFloat = 100
         static let saveButtonHeight: CGFloat = 40
+        static let buttonCornerRadius: CGFloat = 10
+        
+        // Colors
+        static let chooseButtonColor: UIColor = .darkGray
+        static let chooseButtontextColor: UIColor = .white
     }
     
     // MARK: - Fields
@@ -28,9 +36,12 @@ class WishEventTextFieldStack : UIView {
     private var saveButton: UIButton = .init(type: .system)
     private let startDateField: DatePickerField = DatePickerField(title: Constants.startDateTitle)
         private let endDateField: DatePickerField = DatePickerField(title: Constants.endDateTitle)
+    private let orLabel: UILabel = UILabel()
+    private let chooseWishButton: UIButton = .init(type: .roundedRect)
     private var stackView: UIStackView = UIStackView()
     
     var saveEvent: ((WishEventModel) -> Void)?
+    var showChooseWishScreen: (() -> Void)?
     
     // MARK: - Lifecycle
     init() {
@@ -45,6 +56,8 @@ class WishEventTextFieldStack : UIView {
     // MARK: - UI Configuration
     private func configureUI() {
         configureSaveButton()
+        onfigureOrLabel()
+        configureChooseWishButton()
         configureStackView()
     }
     
@@ -54,7 +67,7 @@ class WishEventTextFieldStack : UIView {
 
         saveButton.pinCenter(to: buttonContainer)
 
-        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitle(Constants.saveButtonText, for: .normal)
         saveButton.layer.cornerRadius = 8
         saveButton.backgroundColor = .systemBlue
         saveButton.setTitleColor(.white, for: .normal)
@@ -67,6 +80,23 @@ class WishEventTextFieldStack : UIView {
         saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
+    // MARK: - Or label configuration
+    private func onfigureOrLabel() {
+        orLabel.text = Constants.orText
+        orLabel.textAlignment = .center
+        orLabel.font = .systemFont(ofSize: 17, weight: .medium)
+    }
+    
+    // MARK: - Choose wish button configuration
+    private func configureChooseWishButton() {
+        chooseWishButton.backgroundColor = Constants.chooseButtonColor
+        chooseWishButton.setTitle(Constants.chooseButtonText, for: .normal)
+        chooseWishButton.setTitleColor(Constants.chooseButtontextColor, for: .normal)
+        chooseWishButton.layer.cornerRadius = Constants.buttonCornerRadius
+        
+        chooseWishButton.addTarget(self, action: #selector(chooseButtonPressed), for: .touchUpInside)
+    }
+    
     // MARK: - Stack view configuration
     private func configureStackView() {
         self.addSubview(stackView)
@@ -75,6 +105,8 @@ class WishEventTextFieldStack : UIView {
         stackView.spacing = Constants.spacing
 
         stackView.addArrangedSubview(titleTextField)
+        stackView.addArrangedSubview(orLabel)
+        stackView.addArrangedSubview(chooseWishButton)
         stackView.addArrangedSubview(descriptionTextField)
         stackView.addArrangedSubview(startDateField)
         stackView.addArrangedSubview(endDateField)
@@ -96,5 +128,9 @@ class WishEventTextFieldStack : UIView {
         descriptionTextField.clear()
         
         saveEvent?(eventModel)
+    }
+    
+    @objc private func chooseButtonPressed() {
+        showChooseWishScreen?()
     }
 }

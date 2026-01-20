@@ -48,7 +48,7 @@ class WishEventCell : UICollectionViewCell {
         formatter.dateFormat = Constants.dateFormat
         return formatter
     }()
-
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,14 +70,16 @@ class WishEventCell : UICollectionViewCell {
     }
     
     private func configureWrap() {
-        addSubview(wrapView)
-        wrapView.pin(to: self, Constants.offset)
+        contentView.addSubview(wrapView)
+        
+        wrapView.pin(to: contentView, Constants.offset)
         wrapView.layer.cornerRadius = Constants.cornerRadius
         wrapView.backgroundColor = Constants.backgroundColor
     }
     
     private func configureTitleLabel() {
-        addSubview(titleLabel)
+        wrapView.addSubview(titleLabel)
+        
         titleLabel.textColor = Constants.textColor
         titleLabel.pinTop(to: wrapView, Constants.titleTop)
         titleLabel.font = Constants.titleFont
@@ -85,7 +87,8 @@ class WishEventCell : UICollectionViewCell {
     }
     
     private func configureDescriptionLabel() {
-        addSubview(descriptionLabel)
+        wrapView.addSubview(descriptionLabel)
+        
         descriptionLabel.textColor = Constants.textColor
         descriptionLabel.pinTop(to: titleLabel, Constants.descriptionTop)
         descriptionLabel.pinLeft(to: wrapView, Constants.titleLeading)
@@ -93,8 +96,8 @@ class WishEventCell : UICollectionViewCell {
     }
     
     private func configureStartDateLabel() {
-        addSubview(startDateLabel)
-
+        wrapView.addSubview(startDateLabel)
+        
         startDateLabel.font = Constants.dateFont
         startDateLabel.textColor = Constants.dateTextColor
         startDateLabel.pinRight(to: wrapView.trailingAnchor, Constants.startDateTrailing)
@@ -102,7 +105,7 @@ class WishEventCell : UICollectionViewCell {
     }
     
     private func configureEndDateLabel() {
-        addSubview(endDateLabel)
+        wrapView.addSubview(endDateLabel)
         
         endDateLabel.font = Constants.dateFont
         endDateLabel.textColor = Constants.dateTextColor
@@ -117,5 +120,5 @@ class WishEventCell : UICollectionViewCell {
         startDateLabel.text = "\(Constants.startDateText) \(dateFormatter.string(from: event.startDate))"
         endDateLabel.text = "\(Constants.endDateText) \(dateFormatter.string(from: event.endDate))"
     }
-
+    
 }

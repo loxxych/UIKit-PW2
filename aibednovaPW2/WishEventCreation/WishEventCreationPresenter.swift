@@ -31,7 +31,10 @@ class WishEventCreationPresenter : WishEventCreationPresentationLogic {
     }
     
     func showChooseWishViewController() {
-        let vc = WishChoiceAssembly.build()
+        let vc = WishChoiceAssembly.build(wishSelected: {[weak self] wishText in
+            self?.view?.updateTitleInput(newTitle: wishText)
+        })
+        
         view?.present(vc, animated: true)
     }
 }

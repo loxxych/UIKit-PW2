@@ -12,6 +12,7 @@ final class WishChoiceInteractor : WishChoiceBusinessLogic {
     private enum Constants {
         // Text
         static let containerName: String = "WishDataModel"
+        static let fetchErrorMsg: String = "Fetch error"
     }
     
     // MARK: - Fields
@@ -32,7 +33,7 @@ final class WishChoiceInteractor : WishChoiceBusinessLogic {
         return persistentContainer.viewContext
       }()
     
-    private var wishes: [WishEvent] = []
+    private var wishes: [Wish] = []
     
     // MARK: - Lifecycle
     init(presenter: WishChoicePresentationLogic) {
@@ -40,16 +41,16 @@ final class WishChoiceInteractor : WishChoiceBusinessLogic {
     }
     
     // MARK: - BusinessLogic
-    func laodWishes() {
+    func loadWishes() {
         let fetchRequest: NSFetchRequest<Wish> = Wish.fetchRequest()
         do {
             try wishes = context.fetch(fetchRequest)
         } catch {
-            fatalError("\(Constants.errorMsg)\(error)")
+            fatalError("\(Constants.fetchErrorMsg): \(error)")
         }
         
         let newIndexPath = IndexPath(row: wishes.count - 1, section: 0)
         
-        presenter.presentLoadEvents(Model.Fetch.Response(events: wishes, indexPath: newIndexPath))
+        presenter.presentLoadWishes(Model.Fetch.Response(wishes: wishes, indexPath: newIndexPath))
     }
 }

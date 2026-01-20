@@ -133,4 +133,9 @@ class WishEventTextFieldStack : UIView {
     @objc private func chooseButtonPressed() {
         showChooseWishScreen?()
     }
+    
+    // MARK: - Utility
+    func updateTitleInput(newTitle: String) {
+        titleTextField.updateTitleInput(newTitle: newTitle)
+    }
 }

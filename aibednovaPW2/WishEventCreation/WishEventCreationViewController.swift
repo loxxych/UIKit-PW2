@@ -96,4 +96,9 @@ final class WishEventCreationViewController : UIViewController {
         titleLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.titleTop)
         titleLabel.pinCenterX(to: view)
     }
+    
+    // MARK: - Display logic
+    func updateTitleInput(newTitle: String) {
+        wishEventTextFieldStack.updateTitleInput(newTitle: newTitle)
+    }
 }

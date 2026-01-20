@@ -8,7 +8,7 @@
 protocol WishChoiceBusinessLogic {
     typealias Model = WishChoiceModel
 
-    func laodWishes()
+    func loadWishes()
 }
 
 protocol WishChoicePresentationLogic {

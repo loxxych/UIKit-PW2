@@ -103,4 +103,8 @@ class TitleTextField: UIView {
         textField.resignFirstResponder()
     }
     
+    func updateTitleInput(newTitle: String) {
+        textField.text = newTitle
+    }
+    
 }

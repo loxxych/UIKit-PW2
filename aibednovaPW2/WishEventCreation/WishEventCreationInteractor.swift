@@ -7,7 +7,7 @@
 
 import CoreData
 
-class WishEventCreationInteractor : WishEventCreationBusinessLogic {
+final class WishEventCreationInteractor : WishEventCreationBusinessLogic {
     // MARK: - Constants
     private enum Constants {
         // Strings

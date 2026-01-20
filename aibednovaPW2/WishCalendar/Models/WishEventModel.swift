@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WishEventModel {
+final class WishEventModel {
     var title: String
     var description: String
     var startDate: Date

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishEventTextFieldStack : UIView {
+final class WishEventTextFieldStack : UIView {
     // MARK: - Constants
     private enum Constants {
         // Text

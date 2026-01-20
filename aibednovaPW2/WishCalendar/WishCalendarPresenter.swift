@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WishCalendarPresenter : WishCalendarPresentationLogic {
+final class WishCalendarPresenter : WishCalendarPresentationLogic {
     // MARK: - Fields
     weak var view: WishCalendarViewController?
     

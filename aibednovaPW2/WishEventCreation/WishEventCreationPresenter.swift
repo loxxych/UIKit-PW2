@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishEventCreationPresenter : WishEventCreationPresentationLogic {
+final class WishEventCreationPresenter : WishEventCreationPresentationLogic {
     // MARK: - Constants
     private enum Constants {
         // Strings

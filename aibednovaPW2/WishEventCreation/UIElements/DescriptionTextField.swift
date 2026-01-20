@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DescriptionTextField: UIView {
+final class DescriptionTextField: UIView {
     // MARK: - Constants
     private enum Constants {
         // Text

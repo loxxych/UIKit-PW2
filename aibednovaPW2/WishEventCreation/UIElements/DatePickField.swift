@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DatePickerField: UIView {
+final class DatePickerField: UIView {
     // MARK: - Constants
     private enum Constants {
         // Text

@@ -7,7 +7,7 @@
 
 import CoreData
 
-class WishCalendarInteractor : WishCalendarBusinessLogic {
+final class WishCalendarInteractor : WishCalendarBusinessLogic {
     // MARK: - Constants
     private enum Constants {
         static let containerName: String = "WishDataModel"
